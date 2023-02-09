@@ -12,7 +12,6 @@ interface IRequest {
 class AuthenticateUserUseCase {
 
    async execute({ username, password }: IRequest){
-
         const userAlreadyExists = await client.user.findFirst({
             where:{
                 username

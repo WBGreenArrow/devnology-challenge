@@ -17,9 +17,10 @@ model User {
 }
 
 model Bookmarks {
-  id      String @id @default(uuid())
-  label   String
-  url     String
-  user    User   @relation(fields: [id_user], references: [id])
-  id_user String
+  id         String   @id @default(uuid())
+  label      String
+  url        String
+  user       User     @relation(fields: [user_id], references: [id])
+  user_id    String
+  created_at DateTime @default(now())
 }
