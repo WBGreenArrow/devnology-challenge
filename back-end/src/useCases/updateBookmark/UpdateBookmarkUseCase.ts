@@ -12,11 +12,7 @@ interface IUpdateListBookmark {
 
 class UpdateBookmarkUseCase {
     async execute({ id, data } : IUpdateListBookmark) {
-
-        if(!id){
-            throw new Error("Bookmark not exists")
-        }
-
+        
         const bookmarkExists = await client.bookmarks.findFirst({
             where:{
                 id
