@@ -16,11 +16,21 @@ class CreateBookmarksUseCase {
             throw new Error("Error on save")
         }
 
+        const userAlreadyExists = await client.user.findFirst({
+            where:{
+                id: user_id
+            }
+        })
+
+        if(!userAlreadyExists){
+            throw new Error("Error on save")
+        }
+
         const bookmark = await client.bookmarks.create({
             data:{
                 label, 
                 url,  
-                id_user: user_id
+                user_id,
             }
         })
 

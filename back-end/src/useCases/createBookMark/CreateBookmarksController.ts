@@ -3,7 +3,6 @@ import { CreateBookmarksUseCase } from "./CreateBookmarksUseCase"
 
 
 class CreateBookmarksController {
-
     async handle(request: Request, response: Response){
         const { label, url, user_id } = request.body
 
@@ -18,7 +17,6 @@ class CreateBookmarksController {
         return response.json(bookmark)
 
     }
-
 }
 
 export { CreateBookmarksController }
