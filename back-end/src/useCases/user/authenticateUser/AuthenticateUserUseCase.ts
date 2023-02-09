@@ -1,7 +1,7 @@
 import { compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 
-import { client } from "../../prisma/client";
+import { client } from "../../../prisma/client";
  
 
 interface IRequest {

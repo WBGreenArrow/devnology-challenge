@@ -1,11 +1,11 @@
 import { Router } from "express";
-import { CreateUserController } from "./useCases/createUser/CreateUserController"
-import { AuthenticateUserController } from "./useCases/authenticateUser/AuthenticateUserController";
-import { ListBookMarksController } from "./useCases/listBookMarks/ListBookMarksController";
-import { CreateBookmarksController } from "./useCases/createBookMark/CreateBookmarksController";
-import { UpdateBookmarkController } from "./useCases/updateBookmark/UpdateBookmarkController";
-import { DeleteBookmarkController } from "./useCases/deleteBookmark/DeleteBookmarkController";
-import { GetBookmarkController } from "./useCases/getBookmark/GetBookmarkController";
+import { CreateUserController } from "./useCases/user/createUser/CreateUserController"
+import { AuthenticateUserController } from "./useCases/user/authenticateUser/AuthenticateUserController";
+import { ListBookMarksController } from "./useCases/bookmarks/listBookMarks/ListBookMarksController";
+import { CreateBookmarksController } from "./useCases/bookmarks/createBookMark/CreateBookmarksController";
+import { UpdateBookmarkController } from "./useCases/bookmarks/updateBookmark/UpdateBookmarkController";
+import { DeleteBookmarkController } from "./useCases/bookmarks/deleteBookmark/DeleteBookmarkController";
+import { GetBookmarkController } from "./useCases/bookmarks/getBookmark/GetBookmarkController";
 
 import { ensureAutenticate } from "./middlewares/ensureAuthenticate";
 
