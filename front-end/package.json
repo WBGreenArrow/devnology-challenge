@@ -11,9 +11,15 @@
   "dependencies": {
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.11.0",
     "@mui/material": "^5.11.8",
+    "localforage": "^1.10.0",
+    "match-sorter": "^6.3.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.8.1",
+    "sort-by": "^1.2.0"
   },
   "devDependencies": {
     "@babel/plugin-syntax-logical-assignment-operators": "^7.10.4",
