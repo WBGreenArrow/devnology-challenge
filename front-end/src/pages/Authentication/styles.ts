@@ -6,13 +6,20 @@ export const useStyles = makeStyles((theme?: any) => ({
     height: '100%',
 
     display: 'flex',
-    justifyContent: 'center',
+    justifyContent: 'left',
     alignItems: 'center',
+
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 16,
+      flexDirection: 'column-reverse',
+      justifyContent: 'center',
+    },
   },
 
   containerText: {
-    width: 547,
+    maxWidth: 547,
     position: 'absolute',
+    paddingBottom: 16,
 
     '& h1': {
       fontSize: 42,
@@ -27,18 +34,38 @@ export const useStyles = makeStyles((theme?: any) => ({
       color: '#62618F',
       fontWeight: 500,
     },
+
+    [theme.breakpoints.down('sm')]: {
+      position: 'inherit',
+
+      '& h1': {
+        textAlign: 'center',
+      },
+
+      '& p': {
+        textAlign: 'center',
+      },
+    },
   },
 
   containerImg: {
-    width: 562,
-    height: 482,
+    maxWidth: 562,
+    maxHeight: 482,
+    width: '80%',
+    height: 'auto',
+
     position: 'relative',
     top: '24%',
-    left: '30%',
+    left: '50%',
 
     '& img': {
       width: '100%',
-      height: '100%',
+      height: 'auto',
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      position: 'inherit',
+      width: '100%',
     },
   },
 
@@ -47,11 +74,15 @@ export const useStyles = makeStyles((theme?: any) => ({
     height: '100%',
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'right',
+
+    [theme.breakpoints.down('sm')]: {
+      justifyContent: 'center',
+    },
   },
 
   loginContent: {
-    width: 400,
+    maxWidth: 400,
     height: '490',
     '& > div': {
       paddingBottom: 16,

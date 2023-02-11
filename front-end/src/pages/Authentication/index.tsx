@@ -20,8 +20,8 @@ export const Authentication = () => {
   return (
     <Container maxWidth={'xl'}>
       <Box sx={{ width: '100%', height: '100vh' }}>
-        <Grid container direction="row" sx={{ height: '100%' }}>
-          <Grid item xs={8}>
+        <Grid container sx={{ height: '100%', flexDirection: { xs: 'column', md: 'row' } }}>
+          <Grid item md>
             <div className={classes.container}>
               <div className={classes.containerText}>
                 <h1>Sign In to Recharge Direct</h1>
@@ -35,7 +35,7 @@ export const Authentication = () => {
               </div>
             </div>
           </Grid>
-          <Grid item xs={4}>
+          <Grid item md>
             <div className={classes.loginContainer}>
               <div className={classes.loginContent}>
                 <TextField placeholder="user name" fullWidth className={classes.loginInput} />
