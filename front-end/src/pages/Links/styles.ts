@@ -3,10 +3,11 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles((theme?: any) => ({
   linkContainer: {
     width: '100%',
-    heigth: '100%',
+    height: '100%',
   },
   linkContent: {
     padding: '65px 72px',
+    position: 'relative',
   },
 
   headerContainer: {
@@ -18,6 +19,25 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontFamily: 'Poppins, sans-serif',
       fontWeight: 700,
       color: '#1A194D',
+    },
+  },
+
+  linkFormAdd: {
+    display: 'flex',
+    justifyContent: 'end',
+    '& span': {
+      width: 120,
+      height: 38,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: '#1A194D',
+
+      cursor: 'pointer',
+      fontSize: 16,
+      borderRadius: 8,
+      fontFamily: 'Poppins, sans-serif',
+      color: '#FFF',
     },
   },
 
@@ -34,7 +54,7 @@ export const useStyles = makeStyles((theme?: any) => ({
       color: '#1A194D',
     },
 
-    '& :last-child': {
+    '& :nth-child(2)': {
       fontSize: 14,
       fontFamily: 'Poppins, sans-serif',
       color: '#62618F',
@@ -68,6 +88,54 @@ export const useStyles = makeStyles((theme?: any) => ({
       '& ::-webkit-scrollbar-thumb': {
         background: '#EE4D38',
       },
+    },
+  },
+
+  linkFormContainer: {
+    width: '100%',
+
+    paddingBottom: 32,
+
+    '& span label': {
+      fontSize: 14,
+      fontFamily: 'Poppins, sans-serif',
+      fontWeight: 500,
+      color: '#1A194D',
+    },
+    '& :nth-child(3) span': {
+      paddingTop: 16,
+      width: '100%',
+      height: '100%',
+
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'start',
+    },
+  },
+
+  linkFormInput: {
+    width: '100%',
+
+    '& .MuiOutlinedInput-root': {
+      backgroundColor: '#EAF0F7',
+      fontSize: 14,
+      height: 42,
+      fontFamily: 'Poppins, sans-serif',
+      color: '#62618F',
+
+      borderRadius: 10,
+      '& fieldset': {
+        border: 'none',
+        outline: 'none',
+      },
+      '&.Mui-focused fieldset': {
+        border: 'none',
+        outline: 'none',
+      },
+    },
+
+    '& > input': {
+      paddingLeft: 0,
     },
   },
 

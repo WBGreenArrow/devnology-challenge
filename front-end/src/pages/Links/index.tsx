@@ -1,7 +1,11 @@
-import { Grid, TextField, Tooltip } from '@mui/material'
+import { useState, useEffect } from 'react'
+
+import { Grid, TextField, Tooltip, InputLabel } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
+import SaveIcon from '@mui/icons-material/Save'
 import { useStyles } from './styles'
+import { ImportLinksCard } from '../../components/ImportLinksCard'
 
 const itemMock = [
   {
@@ -98,7 +102,14 @@ const itemMock = [
 ]
 
 export const Links = () => {
+  const [isAddingNewItem, setIsAddingNewItem] = useState<boolean>(false)
   const classes = useStyles()
+
+  useEffect(() => {
+    return () => {
+      setIsAddingNewItem(false)
+    }
+  }, [])
 
   return (
     <Grid item sm>
@@ -106,6 +117,7 @@ export const Links = () => {
         <div className={classes.linkContent}>
           <div className={classes.headerContainer}>
             <h1>Links</h1>
+            <ImportLinksCard />
           </div>
           <div className={classes.headerInfo}>
             <span>Create link</span>
@@ -113,6 +125,37 @@ export const Links = () => {
           </div>
 
           <div className={classes.linkContainerItems}>
+            <div className={classes.linkFormContainer}>
+              {!isAddingNewItem ? (
+                <div className={classes.linkFormAdd}>
+                  <Tooltip title="Add new link" enterDelay={500} enterNextDelay={500}>
+                    <span onClick={() => setIsAddingNewItem((prevState) => !prevState)}>Add new link</span>
+                  </Tooltip>
+                </div>
+              ) : (
+                <Grid container spacing={2}>
+                  <Grid item xs={4}>
+                    <span>
+                      <InputLabel>Title</InputLabel>
+                      <TextField className={classes.linkFormInput} fullWidth />
+                    </span>
+                  </Grid>
+                  <Grid item xs={6}>
+                    <span>
+                      <InputLabel>Url</InputLabel>
+                      <TextField className={classes.linkFormInput} fullWidth />
+                    </span>
+                  </Grid>
+                  <Grid item xs={2}>
+                    <span>
+                      <Tooltip title="Save" enterDelay={500} enterNextDelay={500}>
+                        <SaveIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
+                      </Tooltip>
+                    </span>
+                  </Grid>
+                </Grid>
+              )}
+            </div>
             <div className={classes.linkContainerItemsHeader}>
               <Grid container>
                 <Grid item xs={2}>
