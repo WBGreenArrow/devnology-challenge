@@ -1,6 +1,7 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
 import { Authentication } from './pages/Login'
-import { DashBoard } from './pages/Home'
+import { DashBoard } from './components/DashBoard'
+import { Links } from './pages/Links'
 
 type PrivateRouteProps = {
   children: JSX.Element
@@ -30,7 +31,7 @@ const RoutesProvider = () => {
         }
       >
         <Route path="/user" element={<h1>User</h1>} />
-        <Route path="/links" element={<h1>Links</h1>} />
+        <Route path="/links" element={<Links />} />
       </Route>
     </Routes>
   )

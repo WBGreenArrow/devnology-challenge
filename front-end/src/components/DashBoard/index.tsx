@@ -10,9 +10,7 @@ export const DashBoard = () => {
       <Box sx={{ width: '100%', height: '100vh' }}>
         <Grid container sx={{ height: '100%' }}>
           <SideBar />
-          <Grid item sm>
-            <Outlet />
-          </Grid>
+          <Outlet />
         </Grid>
       </Box>
     </Container>
