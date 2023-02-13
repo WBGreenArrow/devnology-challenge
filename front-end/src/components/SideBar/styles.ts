@@ -6,5 +6,9 @@ export const useStyles = makeStyles((theme?: any) => ({
     heigth: '100%',
 
     backgroundColor: '#F8F8FF',
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
+    },
   },
 }))

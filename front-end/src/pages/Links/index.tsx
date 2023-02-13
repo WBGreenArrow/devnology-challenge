@@ -112,18 +112,17 @@ export const Links = () => {
   }, [])
 
   return (
-    <Grid item sm>
+    <Grid item xs>
       <div className={classes.linkContainer}>
         <div className={classes.linkContent}>
           <div className={classes.headerContainer}>
             <h1>Links</h1>
-            <ImportLinksCard />
           </div>
           <div className={classes.headerInfo}>
             <span>Create link</span>
             <span>Manage your links as best you can</span>
           </div>
-
+          <ImportLinksCard />
           <div className={classes.linkContainerItems}>
             <div className={classes.linkFormContainer}>
               {!isAddingNewItem ? (
@@ -133,20 +132,20 @@ export const Links = () => {
                   </Tooltip>
                 </div>
               ) : (
-                <Grid container spacing={2}>
-                  <Grid item xs={4}>
+                <Grid container spacing={2} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+                  <Grid item xs={12} md={4}>
                     <span>
                       <InputLabel>Title</InputLabel>
                       <TextField className={classes.linkFormInput} fullWidth />
                     </span>
                   </Grid>
-                  <Grid item xs={6}>
+                  <Grid item xs={12} md={6}>
                     <span>
                       <InputLabel>Url</InputLabel>
                       <TextField className={classes.linkFormInput} fullWidth />
                     </span>
                   </Grid>
-                  <Grid item xs={2}>
+                  <Grid item xs={12} md>
                     <span>
                       <Tooltip title="Save" enterDelay={500} enterNextDelay={500}>
                         <SaveIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
@@ -157,55 +156,70 @@ export const Links = () => {
               )}
             </div>
             <div className={classes.linkContainerItemsHeader}>
-              <Grid container>
-                <Grid item xs={2}>
-                  <span>Date</span>
+              <div className={classes.linkContainerItemsHeaderContent}>
+                <Grid container wrap="nowrap">
+                  <Grid item xs={2} sx={{ minWidth: 129 }}>
+                    <span>Date</span>
+                  </Grid>
+                  <Grid item xs={4} sx={{ minWidth: 129 }}>
+                    <span>Title</span>
+                  </Grid>
+                  <Grid item xs={4}>
+                    <span>Url</span>
+                  </Grid>
+                  <Grid item>
+                    <span>Actions</span>
+                  </Grid>
                 </Grid>
-                <Grid item xs={4}>
-                  <span>Title</span>
-                </Grid>
-                <Grid item xs={4}>
-                  <span>url</span>
-                </Grid>
-                <Grid item xs={2}>
-                  <span>Actions</span>
-                </Grid>
-              </Grid>
+              </div>
             </div>
             <div className={classes.linkContentItems}>
-              {itemMock.map((item) => {
+              {itemMock.map((item, index) => {
                 return (
-                  <Grid container key={item.id}>
-                    <Grid item xs={2} sx={{ minWidth: 129 }}>
-                      <span>
-                        <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.created_at} />
-                      </span>
-                    </Grid>
-                    <Grid item xs={4} sx={{ minWidth: 129 }}>
-                      <span>
-                        <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.title} />
-                      </span>
-                    </Grid>
-                    <Grid item xs={4}>
-                      <span>
-                        <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.url} />
-                      </span>
-                    </Grid>
-                    <Grid item xs={2}>
-                      <div className={classes.linkItemsContainerBtns}>
-                        <span>
-                          <Tooltip title="Edit" enterDelay={500} enterNextDelay={500}>
-                            <CreateIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
-                          </Tooltip>
+                  <div
+                    className={
+                      index % 2 === 0
+                        ? `${classes.linkContentItemsBackground} ${classes.linkContentItemsBackgroundColor}`
+                        : classes.linkContentItemsBackground
+                    }
+                  >
+                    <Grid container wrap="nowrap" key={item.id} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+                      <Grid item xs={8} md={2} sx={{ minWidth: 129 }}>
+                        <span className={classes.linkItemsSpanDate}>
+                          <TextField
+                            className={classes.linkItemsInput}
+                            fullWidth
+                            disabled
+                            defaultValue={item.created_at}
+                          />
                         </span>
-                        <span>
-                          <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
-                            <HighlightOffIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
-                          </Tooltip>
+                      </Grid>
+                      <Grid item xs={8} md={4} sx={{ minWidth: 129 }}>
+                        <span className={classes.linkItemsSpanTitle}>
+                          <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.title} />
                         </span>
-                      </div>
+                      </Grid>
+                      <Grid item xs={8} md={4}>
+                        <span className={classes.linkItemsSpanUrl}>
+                          <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.url} />
+                        </span>
+                      </Grid>
+                      <Grid item>
+                        <div className={classes.linkItemsContainerBtns}>
+                          <span>
+                            <Tooltip title="Edit" enterDelay={500} enterNextDelay={500}>
+                              <CreateIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
+                            </Tooltip>
+                          </span>
+                          <span>
+                            <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
+                              <HighlightOffIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
+                            </Tooltip>
+                          </span>
+                        </div>
+                      </Grid>
                     </Grid>
-                  </Grid>
+                  </div>
                 )
               })}
             </div>

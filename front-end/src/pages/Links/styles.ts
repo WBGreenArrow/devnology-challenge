@@ -8,6 +8,9 @@ export const useStyles = makeStyles((theme?: any) => ({
   linkContent: {
     padding: '65px 72px',
     position: 'relative',
+    [theme.breakpoints.down('sm')]: {
+      padding: 16,
+    },
   },
 
   headerContainer: {
@@ -63,7 +66,7 @@ export const useStyles = makeStyles((theme?: any) => ({
 
   linkContainerItems: {
     maxWidth: 900,
-    height: 261,
+    height: 500,
     paddingTop: 50,
 
     '& ::-webkit-scrollbar': {
@@ -89,6 +92,21 @@ export const useStyles = makeStyles((theme?: any) => ({
         background: '#EE4D38',
       },
     },
+
+    [theme.breakpoints.down('sm')]: {
+      height: '60vh',
+    },
+  },
+
+  linkContentItemsBackground: {
+    width: '100%',
+    height: '100%',
+
+    padding: 16,
+    borderRadius: 8,
+  },
+  linkContentItemsBackgroundColor: {
+    backgroundColor: '#F8F8FF',
   },
 
   linkFormContainer: {
@@ -110,6 +128,10 @@ export const useStyles = makeStyles((theme?: any) => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'start',
+
+      [theme.breakpoints.down('sm')]: {
+        justifyContent: 'end',
+      },
     },
   },
 
@@ -138,6 +160,10 @@ export const useStyles = makeStyles((theme?: any) => ({
       paddingLeft: 0,
     },
   },
+  linkContainerItemsHeaderContent: {
+    width: '100%',
+    padding: '0px 16px',
+  },
 
   linkContainerItemsHeader: {
     width: '100%',
@@ -149,6 +175,10 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontSize: 14,
       fontFamily: 'Poppins, sans-serif',
       color: '#62618F',
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      display: 'none',
     },
   },
 
@@ -173,17 +203,52 @@ export const useStyles = makeStyles((theme?: any) => ({
     },
   },
 
+  linkItemsSpanDate: {
+    [theme.breakpoints.down('sm')]: {
+      '&::before': {
+        content: '"Date:"',
+        display: 'block',
+        paddingRight: 6,
+        fontWeight: 500,
+      },
+    },
+  },
+
+  linkItemsSpanTitle: {
+    [theme.breakpoints.down('sm')]: {
+      '&::before': {
+        content: '"Title:"',
+        display: 'block',
+        paddingRight: 6,
+        fontWeight: '500',
+      },
+    },
+  },
+  linkItemsSpanUrl: {
+    [theme.breakpoints.down('sm')]: {
+      '&::before': {
+        content: '"Url:"',
+        display: 'block',
+        paddingRight: 6,
+        fontWeight: 500,
+      },
+    },
+  },
+
   linkItemsInput: {
     width: '100%',
 
     '& .MuiOutlinedInput-root': {
       height: 24,
 
-      //   backgroundColor: '#EAF0F7',
       fontSize: 16,
       fontFamily: 'Poppins, sans-serif',
       color: '#1A194D',
       fontWeight: 500,
+
+      [theme.breakpoints.down('sm')]: {
+        fontWeight: '400',
+      },
 
       '& fieldset': {
         border: 'none',
@@ -201,6 +266,20 @@ export const useStyles = makeStyles((theme?: any) => ({
 
     '& span': {
       width: 32,
+    },
+
+    [theme.breakpoints.down('sm')]: {
+      '&::before': {
+        content: '"Actions:"',
+        display: 'flex',
+        alignItems: 'center',
+        paddingRight: 6,
+
+        fontSize: 16,
+        fontFamily: 'Poppins, sans-serif',
+        color: '#1A194D',
+        fontWeight: 500,
+      },
     },
   },
 }))

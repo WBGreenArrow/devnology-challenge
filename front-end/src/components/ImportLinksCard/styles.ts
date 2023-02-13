@@ -2,11 +2,19 @@ import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme?: any) => ({
   importLinksCardContainer: {
-    width: 280,
+    maxWidth: 280,
     padding: 16,
     position: 'absolute',
     right: 0,
     top: 50,
+
+    [theme.breakpoints.down('xs')]: {
+      position: 'inherit',
+      display: 'block',
+      marginBottom: 16,
+      right: 0,
+      top: 50,
+    },
 
     backgroundColor: '#EE4D38',
     borderRadius: 16,
