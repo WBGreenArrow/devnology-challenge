@@ -12,6 +12,15 @@ interface IRequest {
 class AuthenticateUserUseCase {
 
    async execute({ username, password }: IRequest){
+
+        if(!username || username === ""){
+            throw new Error("username is required")
+        }
+
+        if(!password || password === ""){
+            throw new Error("password is required")
+        }
+
         const userAlreadyExists = await client.user.findFirst({
             where:{
                 username
