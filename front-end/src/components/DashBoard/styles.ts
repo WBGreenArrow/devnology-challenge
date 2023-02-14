@@ -3,8 +3,14 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles((theme?: any) => ({
   outletContainer: {
     width: '100%',
-    height: '100%',
+    paddingLeft: 260,
+
+    [theme.breakpoints.down('sm')]: {
+      padding: 16,
+      paddingLeft: 0,
+    },
   },
+
   outletContent: {
     height: '100%',
     padding: '65px  72px 16px  72px ',

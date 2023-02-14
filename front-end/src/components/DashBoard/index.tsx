@@ -20,33 +20,35 @@ export const DashBoard = () => {
     setHeaderText(() => textHeader)
   }
   return (
-    <Container maxWidth={'xl'}>
-      <Box sx={{ width: '100%', height: '100vh' }}>
-        <Grid container>
-          <SideBar
-            showMenu={showMenu}
-            onClose={handleCloseMenu}
-            changeHeaderText={(textHeader) => handleChangeHeaderText(textHeader)}
-          />
-          <Grid item xs sx={{ height: '100%' }}>
-            <span className={classes.menuHamburger}>
-              <MenuIcon onClick={() => setShowMenu((prevStats) => !prevStats)} />
-            </span>
-            <div className={classes.outletContainer}>
-              <div className={classes.outletContent}>
-                <div className={classes.headerContent}>
-                  <h1>{headerText}</h1>
+    <div style={{ width: '100vw', height: '100vh' }}>
+      <Container style={{ height: '100%' }}>
+        <Box sx={{ width: '100%' }}>
+          <Grid container>
+            <SideBar
+              showMenu={showMenu}
+              onClose={handleCloseMenu}
+              changeHeaderText={(textHeader) => handleChangeHeaderText(textHeader)}
+            />
+            <Grid item xs>
+              <span className={classes.menuHamburger}>
+                <MenuIcon onClick={() => setShowMenu((prevStats) => !prevStats)} />
+              </span>
+              <div className={classes.outletContainer}>
+                <div className={classes.outletContent}>
+                  <div className={classes.headerContent}>
+                    <h1>{headerText}</h1>
+                  </div>
+                  <RouterComponent />
+                  <div className={classes.outletContainerFooter}>
+                    <h2>Made with ❤️ by</h2>
+                    <h3>Wellyson E Brito</h3>
+                  </div>
                 </div>
-                <RouterComponent />
               </div>
-              <div className={classes.outletContainerFooter}>
-                <h2>Made with ❤️ by</h2>
-                <h3>Wellyson E Brito</h3>
-              </div>
-            </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </Box>
-    </Container>
+        </Box>
+      </Container>
+    </div>
   )
 }

@@ -4,6 +4,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   sideBarContainer: {
     width: 260,
     height: '100vh',
+    position: 'fixed',
 
     padding: '62px 16px 16px 16px',
     transition: 'ease-in 0.5s',
@@ -51,7 +52,9 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
 
   sideBarContainerShow: {
-    left: '0px !important',
+    [theme.breakpoints.down('sm')]: {
+      left: 0,
+    },
   },
 
   sideBarBtnCloseContainer: {
