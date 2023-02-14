@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
-import { Outlet as RouterComponent } from 'react-router-dom'
+import { Outlet as RouterComponent, useNavigate } from 'react-router-dom'
 import { Container, Box, Grid } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -8,9 +8,15 @@ import { SideBar } from '../../components/SideBar'
 import { useStyles } from './styles'
 
 export const DashBoard = () => {
-  const classes = useStyles()
   const [showMenu, setShowMenu] = useState<boolean>(false)
   const [headerText, setHeaderText] = useState<string>('')
+
+  const classes = useStyles()
+  const navigate = useNavigate()
+
+  useEffect(() => {
+    navigate('/links')
+  }, [])
 
   const handleCloseMenu = () => {
     setShowMenu((prevState) => !prevState)

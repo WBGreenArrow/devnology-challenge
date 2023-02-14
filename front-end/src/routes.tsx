@@ -21,7 +21,6 @@ const RoutesProvider = () => {
   return (
     <Routes>
       <Route path="/login" element={<Authentication />} />
-
       <Route
         path="/"
         element={
