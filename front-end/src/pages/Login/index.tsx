@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import {
   Container,
   Box,
@@ -12,10 +14,29 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { useStyles } from './styles'
+import { api } from '../../config/api'
+import { saveTokenToLocalStorage } from '../../config/auth'
 
 export const Authentication = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [userName, setUserName] = useState('')
+  const [password, setPassword] = useState('')
+  const navigate = useNavigate()
+
   const classes = useStyles()
+
+  const handleAuthenticate = async () => {
+    try {
+      const { data } = await api.post('/authenticate', {
+        username: userName,
+        password,
+      })
+      saveTokenToLocalStorage(data)
+      navigate('/')
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <Container maxWidth={'xl'}>
@@ -38,7 +59,12 @@ export const Authentication = () => {
           <Grid item md>
             <div className={classes.loginContainer}>
               <div className={classes.loginContent}>
-                <TextField placeholder="user name" fullWidth className={classes.loginInput} />
+                <TextField
+                  placeholder="user name"
+                  fullWidth
+                  className={classes.loginInput}
+                  onChange={(event) => setUserName(event.target.value)}
+                />
                 <FormControl
                   fullWidth
                   className={
@@ -49,6 +75,7 @@ export const Authentication = () => {
                     id="standard-adornment-password"
                     placeholder="password"
                     type={showPassword ? 'text' : 'password'}
+                    onChange={(event) => setPassword(event.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -62,7 +89,7 @@ export const Authentication = () => {
                     }
                   />
                 </FormControl>
-                <Button fullWidth className={classes.loginButton} variant="contained">
+                <Button className={classes.loginButton} fullWidth variant="contained" onClick={handleAuthenticate}>
                   Sign In
                 </Button>
               </div>

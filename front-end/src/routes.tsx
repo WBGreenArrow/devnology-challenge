@@ -2,15 +2,16 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { Authentication } from './pages/Login'
 import { DashBoard } from './components/DashBoard'
 import { Links } from './pages/Links'
+import { getTokenFromLocalStorage } from './config/auth'
 
 type PrivateRouteProps = {
   children: JSX.Element
 }
 
 export const PrivateRoutes = ({ children }: PrivateRouteProps) => {
-  const isAuthenticated = true
+  const token = getTokenFromLocalStorage()
 
-  if (isAuthenticated) {
+  if (token) {
     return children
   }
 
