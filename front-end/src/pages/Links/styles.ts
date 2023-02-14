@@ -1,33 +1,10 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme?: any) => ({
-  linkContainer: {
-    width: '100%',
-    height: '100%',
-  },
-  linkContent: {
-    padding: '65px 72px',
-    position: 'relative',
-    [theme.breakpoints.down('sm')]: {
-      padding: 16,
-    },
-  },
-
-  headerContainer: {
-    width: '100%',
-    height: 60,
-
-    '& > h1': {
-      fontSize: 32,
-      fontFamily: 'Poppins, sans-serif',
-      fontWeight: 700,
-      color: '#1A194D',
-    },
-  },
-
   linkFormAdd: {
     display: 'flex',
     justifyContent: 'end',
+
     '& span': {
       width: 120,
       height: 38,
@@ -105,6 +82,7 @@ export const useStyles = makeStyles((theme?: any) => ({
     padding: 16,
     borderRadius: 8,
   },
+
   linkContentItemsBackgroundColor: {
     backgroundColor: '#F8F8FF',
   },
@@ -120,6 +98,7 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontWeight: 500,
       color: '#1A194D',
     },
+
     '& :nth-child(3) span': {
       paddingTop: 16,
       width: '100%',
@@ -139,17 +118,19 @@ export const useStyles = makeStyles((theme?: any) => ({
     width: '100%',
 
     '& .MuiOutlinedInput-root': {
-      backgroundColor: '#EAF0F7',
-      fontSize: 14,
       height: 42,
       fontFamily: 'Poppins, sans-serif',
+      fontSize: 14,
       color: '#62618F',
+      backgroundColor: '#EAF0F7',
 
       borderRadius: 10,
+
       '& fieldset': {
         border: 'none',
         outline: 'none',
       },
+
       '&.Mui-focused fieldset': {
         border: 'none',
         outline: 'none',
@@ -160,6 +141,7 @@ export const useStyles = makeStyles((theme?: any) => ({
       paddingLeft: 0,
     },
   },
+
   linkContainerItemsHeaderContent: {
     width: '100%',
     padding: '0px 16px',
@@ -193,12 +175,13 @@ export const useStyles = makeStyles((theme?: any) => ({
     '& span': {
       width: '100%',
       height: 56,
+
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
 
-      fontSize: 16,
       fontFamily: 'Poppins, sans-serif',
+      fontSize: 16,
       color: '#1A194D',
     },
   },
@@ -224,6 +207,7 @@ export const useStyles = makeStyles((theme?: any) => ({
       },
     },
   },
+
   linkItemsSpanUrl: {
     [theme.breakpoints.down('sm')]: {
       '&::before': {
