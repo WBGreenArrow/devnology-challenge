@@ -3,7 +3,8 @@ import { makeStyles } from '@material-ui/core/styles'
 export const useStyles = makeStyles((theme?: any) => ({
   sideBarContainer: {
     width: 260,
-    height: '100%',
+    height: '100vh',
+
     padding: '62px 16px 16px 16px',
     transition: '0.6s',
 
@@ -20,6 +21,7 @@ export const useStyles = makeStyles((theme?: any) => ({
 
     [theme.breakpoints.down('sm')]: {
       width: 300,
+      height: '100%',
       padding: '20px 16px 16px 16px',
 
       position: 'fixed',

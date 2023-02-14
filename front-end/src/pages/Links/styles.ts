@@ -43,7 +43,6 @@ export const useStyles = makeStyles((theme?: any) => ({
 
   linkContainerItems: {
     maxWidth: 900,
-    height: 500,
     paddingTop: 50,
 
     '& ::-webkit-scrollbar': {
@@ -70,15 +69,13 @@ export const useStyles = makeStyles((theme?: any) => ({
       },
     },
 
-    [theme.breakpoints.down('sm')]: {
-      height: '60vh',
+    [theme.breakpoints.down('xs')]: {
+      paddingTop: 16,
     },
   },
 
   linkContentItemsBackground: {
     width: '100%',
-    height: '100%',
-
     padding: 16,
     borderRadius: 8,
   },
@@ -166,7 +163,7 @@ export const useStyles = makeStyles((theme?: any) => ({
 
   linkContentItems: {
     width: '100%',
-    height: '100%',
+    height: 500,
     overflowY: 'scroll',
 
     display: 'flex',
@@ -186,32 +183,10 @@ export const useStyles = makeStyles((theme?: any) => ({
     },
   },
 
-  linkItemsSpanDate: {
+  linkItemsSpan: {
     [theme.breakpoints.down('sm')]: {
       '&::before': {
-        content: '"Date:"',
-        display: 'block',
-        paddingRight: 6,
-        fontWeight: 500,
-      },
-    },
-  },
-
-  linkItemsSpanTitle: {
-    [theme.breakpoints.down('sm')]: {
-      '&::before': {
-        content: '"Title:"',
-        display: 'block',
-        paddingRight: 6,
-        fontWeight: '500',
-      },
-    },
-  },
-
-  linkItemsSpanUrl: {
-    [theme.breakpoints.down('sm')]: {
-      '&::before': {
-        content: '"Url:"',
+        content: ' attr(name-label)": " ',
         display: 'block',
         paddingRight: 6,
         fontWeight: 500,
@@ -263,6 +238,15 @@ export const useStyles = makeStyles((theme?: any) => ({
         fontFamily: 'Poppins, sans-serif',
         color: '#1A194D',
         fontWeight: 500,
+      },
+
+      '& :last-child': {
+        marginLeft: 32,
+      },
+
+      '& svg': {
+        width: 32,
+        height: 32,
       },
     },
   },

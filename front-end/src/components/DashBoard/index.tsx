@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import { Outlet } from 'react-router-dom'
+import { Outlet as RouterComponent } from 'react-router-dom'
 import { Container, Box, Grid } from '@mui/material'
 import MenuIcon from '@mui/icons-material/Menu'
 
@@ -22,13 +22,13 @@ export const DashBoard = () => {
   return (
     <Container maxWidth={'xl'}>
       <Box sx={{ width: '100%', height: '100vh' }}>
-        <Grid container sx={{ height: '100%' }}>
+        <Grid container>
           <SideBar
             showMenu={showMenu}
             onClose={handleCloseMenu}
             changeHeaderText={(textHeader) => handleChangeHeaderText(textHeader)}
           />
-          <Grid item xs>
+          <Grid item xs sx={{ height: '100%' }}>
             <span className={classes.menuHamburger}>
               <MenuIcon onClick={() => setShowMenu((prevStats) => !prevStats)} />
             </span>
@@ -37,7 +37,11 @@ export const DashBoard = () => {
                 <div className={classes.headerContent}>
                   <h1>{headerText}</h1>
                 </div>
-                <Outlet />
+                <RouterComponent />
+              </div>
+              <div className={classes.outletContainerFooter}>
+                <h2>Made with ❤️ by</h2>
+                <h3>Wellyson E Brito</h3>
               </div>
             </div>
           </Grid>

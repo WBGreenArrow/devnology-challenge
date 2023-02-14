@@ -11,9 +11,7 @@ export const useStyles = makeStyles((theme?: any) => ({
     [theme.breakpoints.down('xs')]: {
       position: 'inherit',
       display: 'block',
-      marginBottom: 16,
-      right: 0,
-      top: 50,
+      marginTop: 16,
     },
 
     backgroundColor: '#EE4D38',

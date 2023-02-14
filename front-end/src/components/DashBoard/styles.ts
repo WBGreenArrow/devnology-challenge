@@ -6,7 +6,8 @@ export const useStyles = makeStyles((theme?: any) => ({
     height: '100%',
   },
   outletContent: {
-    padding: '65px 72px',
+    height: '100%',
+    padding: '65px  72px 16px  16px ',
     position: 'relative',
 
     [theme.breakpoints.down('sm')]: {
@@ -39,6 +40,30 @@ export const useStyles = makeStyles((theme?: any) => ({
 
     [theme.breakpoints.down('sm')]: {
       display: 'block',
+    },
+  },
+
+  outletContainerFooter: {
+    width: '100%',
+    padding: '30px 0px',
+
+    display: 'flex',
+    alignItems: 'center',
+    flexDirection: 'column',
+    justifyContent: 'center',
+
+    '& h2': {
+      textAlign: 'center',
+      fontSize: 14,
+      fontFamily: 'Poppins, sans-serif',
+      fontWeight: 400,
+      color: '#62618F',
+    },
+    '& h3': {
+      textAlign: 'center',
+      fontSize: 16,
+      fontWeight: 700,
+      fontFamily: 'Poppins, sans-serif',
     },
   },
 }))
