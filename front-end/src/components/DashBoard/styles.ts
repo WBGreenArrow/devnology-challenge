@@ -7,7 +7,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
   outletContent: {
     height: '100%',
-    padding: '65px  72px 16px  16px ',
+    padding: '65px  72px 16px  72px ',
     position: 'relative',
 
     [theme.breakpoints.down('sm')]: {

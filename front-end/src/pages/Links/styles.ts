@@ -80,6 +80,17 @@ export const useStyles = makeStyles((theme?: any) => ({
     borderRadius: 8,
   },
 
+  linkContentItemsNoData: {
+    width: '100%',
+    height: '100%',
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 16,
+    borderRadius: 8,
+  },
+
   linkContentItemsBackgroundColor: {
     backgroundColor: '#F8F8FF',
   },
@@ -164,7 +175,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   linkContentItems: {
     width: '100%',
     height: 500,
-    overflowY: 'scroll',
+    overflowY: 'auto',
 
     display: 'flex',
     flexDirection: 'column',

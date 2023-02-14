@@ -6,7 +6,7 @@ export const useStyles = makeStyles((theme?: any) => ({
     height: '100vh',
 
     padding: '62px 16px 16px 16px',
-    transition: '0.6s',
+    transition: 'ease-in 0.5s',
 
     backgroundColor: '#F8F8FF',
 
