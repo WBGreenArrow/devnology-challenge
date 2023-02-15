@@ -9,13 +9,14 @@ import { useStyles } from './styles'
 
 export const DashBoard = () => {
   const [showMenu, setShowMenu] = useState<boolean>(false)
-  const [headerText, setHeaderText] = useState<string>('')
+  const [headerText, setHeaderText] = useState<string>('links')
 
   const classes = useStyles()
   const navigate = useNavigate()
 
   useEffect(() => {
-    navigate('/links')
+    const defaultRouter = headerText
+    navigate(`/${defaultRouter}`)
   }, [])
 
   const handleCloseMenu = () => {
@@ -26,7 +27,7 @@ export const DashBoard = () => {
     setHeaderText(() => textHeader)
   }
   return (
-    <div style={{ width: '100vw', height: '100vh' }}>
+    <div style={{ height: '100vh' }}>
       <Container style={{ height: '100%' }}>
         <Box sx={{ width: '100%' }}>
           <Grid container>

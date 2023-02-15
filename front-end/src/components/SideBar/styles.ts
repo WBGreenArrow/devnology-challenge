@@ -18,6 +18,7 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontWeight: 500,
       justifyContent: 'start',
       paddingLeft: 16,
+      textTransform: 'capitalize',
     },
 
     [theme.breakpoints.down('sm')]: {
@@ -85,7 +86,7 @@ export const useStyles = makeStyles((theme?: any) => ({
 
     '& span img': {
       width: 68,
-      heigth: 68,
+      height: 68,
       borderRadius: 16,
     },
   },
@@ -107,6 +108,43 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontFamily: 'Poppins, sans-serif',
       fontSize: 14,
       fontWeight: 400,
+    },
+  },
+
+  sideBarContainerFooter: {
+    height: '78%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'end',
+
+    '& div': {
+      width: 120,
+      display: 'flex',
+      cursor: 'pointer',
+
+      '& span': {
+        color: '#62618F',
+        fontFamily: 'Poppins, sans-serif',
+        fontSize: 14,
+        fontWeight: 500,
+        display: 'flex',
+        justifyContent: 'center',
+        textTransform: 'capitalize',
+        marginLeft: 16,
+      },
+
+      '& :last-child': {
+        marginLeft: 8,
+      },
+
+      [theme.breakpoints.down('sm')]: {
+        width: 130,
+        height: '15%',
+
+        '& span': {
+          fontSize: 18,
+        },
+      },
     },
   },
 }))

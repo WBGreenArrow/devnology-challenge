@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from 'react-router-dom'
-import { Authentication } from './pages/Login'
+import { Login } from './pages/Login'
 import { DashBoard } from './components/DashBoard'
 import { Links } from './pages/Links'
 import { getTokenFromLocalStorage } from './config/auth'
@@ -21,7 +21,7 @@ export const PrivateRoutes = ({ children }: PrivateRouteProps) => {
 const RoutesProvider = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Authentication />} />
+      <Route path="/login" element={<Login />} />
       <Route
         path="/"
         element={

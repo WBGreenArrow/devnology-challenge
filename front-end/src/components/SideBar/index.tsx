@@ -5,9 +5,11 @@ import { TabContext, TabList } from '@mui/lab'
 
 import LanguageIcon from '@mui/icons-material/Language'
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
+import LogoutIcon from '@mui/icons-material/Logout'
 import CloseIcon from '@mui/icons-material/Close'
 
 import { useStyles } from './styles'
+import { removeTokenFromLocalStorage } from '../../config/auth'
 
 interface ISideBar {
   showMenu: boolean
@@ -31,6 +33,11 @@ export const SideBar = ({ showMenu, onClose, changeHeaderText }: ISideBar) => {
 
   const handleChange = (event: React.SyntheticEvent, routerValeu: string) => {
     setRouter(routerValeu)
+  }
+
+  const handleLogOut = () => {
+    removeTokenFromLocalStorage()
+    navigate('/login')
   }
 
   return (
@@ -62,6 +69,12 @@ export const SideBar = ({ showMenu, onClose, changeHeaderText }: ISideBar) => {
             </TabList>
           </Box>
         </TabContext>
+      </div>
+      <div className={classes.sideBarContainerFooter}>
+        <div onClick={handleLogOut}>
+          <span>{<LogoutIcon />}</span>
+          <span>Log out</span>
+        </div>
       </div>
     </Grid>
   )

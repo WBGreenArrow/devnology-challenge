@@ -1,6 +1,12 @@
 import { makeStyles } from '@material-ui/core/styles'
 
 export const useStyles = makeStyles((theme?: any) => ({
+  toast: {
+    fontSize: 16,
+    fontFamily: 'Poppins, sans-serif',
+    color: '#1A194D',
+  },
+
   container: {
     width: '100%',
     height: '100%',
@@ -115,11 +121,9 @@ export const useStyles = makeStyles((theme?: any) => ({
         outline: 'none',
       },
     },
-  },
 
-  loginInputPasswordHidden: {
-    '& .MuiOutlinedInput-root': {
-      fontWeight: 700,
+    '& input[type=password]::-ms-reveal': {
+      display: 'none',
     },
   },
 

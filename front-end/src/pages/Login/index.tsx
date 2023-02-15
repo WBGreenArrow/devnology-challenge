@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import toast, { Toaster } from 'react-hot-toast'
 
 import {
   Container,
@@ -11,21 +12,26 @@ import {
   InputAdornment,
   Button,
   IconButton,
+  CircularProgress,
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { useStyles } from './styles'
 import { api } from '../../config/api'
 import { saveTokenToLocalStorage } from '../../config/auth'
+import { useStyles } from './styles'
 
-export const Authentication = () => {
+export const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [userName, setUserName] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
 
   const classes = useStyles()
 
+  const notify = (message: string) => toast.error(message)
+
   const handleAuthenticate = async () => {
+    setIsLoading(true)
     try {
       const { data } = await api.post('/authenticate', {
         username: userName,
@@ -33,13 +39,19 @@ export const Authentication = () => {
       })
       saveTokenToLocalStorage(data)
       navigate('/')
-    } catch (error) {
-      console.log(error)
+    } catch ({ response: { data } }) {
+      notify(data.message)
     }
+    setIsLoading(false)
   }
 
   return (
     <Container maxWidth={'xl'}>
+      <Toaster
+        toastOptions={{
+          style: { fontSize: 16, fontFamily: 'Poppins, sans-serif', color: '#1A194D', textTransform: 'capitalize' },
+        }}
+      />
       <Box sx={{ width: '100%', height: '100vh' }}>
         <Grid container sx={{ height: '100%', flexDirection: { xs: 'column', md: 'row' } }}>
           <Grid item md>
@@ -65,24 +77,14 @@ export const Authentication = () => {
                   className={classes.loginInput}
                   onChange={(event) => setUserName(event.target.value)}
                 />
-                <FormControl
-                  fullWidth
-                  className={
-                    showPassword ? classes.loginInput : `${classes.loginInput} ${classes.loginInputPasswordHidden}`
-                  }
-                >
+                <FormControl fullWidth className={classes.loginInput}>
                   <OutlinedInput
-                    id="standard-adornment-password"
                     placeholder="password"
                     type={showPassword ? 'text' : 'password'}
                     onChange={(event) => setPassword(event.target.value)}
                     endAdornment={
                       <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={() => setShowPassword((prevState) => !prevState)}
-                          onMouseDown={() => console.log('teste')}
-                        >
+                        <IconButton onClick={() => setShowPassword((prevState) => !prevState)}>
                           {showPassword ? <VisibilityOff /> : <Visibility />}
                         </IconButton>
                       </InputAdornment>
@@ -90,7 +92,20 @@ export const Authentication = () => {
                   />
                 </FormControl>
                 <Button className={classes.loginButton} fullWidth variant="contained" onClick={handleAuthenticate}>
-                  Sign In
+                  {isLoading ? (
+                    <Box
+                      sx={{
+                        display: 'flex',
+                        '& .MuiCircularProgress-circle': {
+                          color: '#1A194D',
+                        },
+                      }}
+                    >
+                      <CircularProgress size={32} />
+                    </Box>
+                  ) : (
+                    'Sign In'
+                  )}
                 </Button>
               </div>
             </div>
