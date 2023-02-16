@@ -209,9 +209,12 @@ export const Links = () => {
         <div className={classes.linkContentItems}>
           {isLoading ? (
             <div className={classes.linkLoadingContainer}>
-              <Box>
-                <CircularProgress size={100} />
-              </Box>
+              {
+                //@ts-ignore
+                <Box>
+                  <CircularProgress size={100} />
+                </Box>
+              }
             </div>
           ) : data.length ? (
             data.map((item, index: number) => (

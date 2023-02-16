@@ -23,9 +23,11 @@ export const ImportLinksCard = ({ onClick, isImporting }: ImportLinksCardProps) 
               <span className={classes.importLinksBtn}>Import</span>
             ) : (
               <span className={classes.importLinksLoading}>
-                <Box alignContent="center" sx={{ border: 'none', display: 'flex', alignItems: 'center' }}>
-                  <CircularProgress size={32} />
-                </Box>
+                {
+                  //@ts-ignorer
+                  <Box alignContent="center" sx={{ border: 'none', display: 'flex', alignItems: 'center' }}></Box>
+                }
+                <CircularProgress size={32} />
               </span>
             )}
           </Tooltip>
