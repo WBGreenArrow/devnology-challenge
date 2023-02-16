@@ -11,7 +11,7 @@ let chrome;
 
 if(process.env.NODE_ENV === 'production'){
   puppeteer = require("puppeteer-core")
-  chrome = require("puppeteer-core")
+  chrome = require("chrome-aws-lambda")
 }else{
   puppeteer = require("puppeteer")
 }
