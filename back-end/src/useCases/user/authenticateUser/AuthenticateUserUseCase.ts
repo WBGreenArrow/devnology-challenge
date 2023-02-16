@@ -41,8 +41,13 @@ class AuthenticateUserUseCase {
             subject: userAlreadyExists.id,
             expiresIn: "4h"
         })
-
-        return { token }
+        
+        const response = {
+            user_id: userAlreadyExists.id,
+            token
+        }
+          
+        return { response }
 
     }
 }
