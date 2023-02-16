@@ -22,8 +22,21 @@ export const PrivateRoutes = ({ children }: PrivateRouteProps) => {
 const RoutesProvider = () => {
   return (
     <Routes>
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<Register />} />
+      <Route
+        path="/login"
+        element={
+          //@ts-ignore
+          <Login />
+        }
+      />
+
+      <Route
+        path="/register"
+        element={
+          //@ts-ignore
+          <Register />
+        }
+      />
       <Route
         path="/"
         element={
