@@ -78,8 +78,8 @@ export const Login = () => {
             <Grid item sm>
               <div className={classes.container}>
                 <div className={classes.containerText}>
-                  <h1>Sign In to Recharge Direct</h1>
-                  <p> if you don’t have an account you can Register here!</p>
+                  <h1>Sign In to Devnology Links</h1>
+                  <p> Organize and manage your links quickly and efficiently!</p>
                 </div>
                 <div className={classes.containerImg}>
                   <img src={ImgBackground} alt="Man downing" />

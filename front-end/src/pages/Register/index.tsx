@@ -73,7 +73,7 @@ export const Register = () => {
             <Grid item md>
               <div className={classes.container}>
                 <div className={classes.containerText}>
-                  <h1>Create you account</h1>
+                  <h1>Create you account on Devnology Links</h1>
                   <p> and manage your links from anywhere and anytime!</p>
                 </div>
                 <div className={classes.containerImg}>
