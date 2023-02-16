@@ -1,8 +1,7 @@
 
 import { client } from "../../prisma/client"
-import puppeteer  from "puppeteer-core"
-// import puppeteer  from "puppeteer"
-import chromium from "chrome-aws-lambda"
+import axios from 'axios'
+import cheerio from 'cheerio'
 interface IRequestCrawler{
     user_id: string;
     url: string;
@@ -10,28 +9,15 @@ interface IRequestCrawler{
 class BlogCrawlerUseCase {
 
     async execute({  user_id, url}: IRequestCrawler ){
-      const browser = await puppeteer.connect({
-        //@ts-ignore
-        browserWSEndpoint: await chromium.default().executablePath,
-      });
+        const response = await axios.get(url);
+        const html = response.data;
 
-        const page = await browser.newPage()
+        const $ = cheerio.load(html);
 
-        await page.goto(url)
-
-        const favoriteArticles = await page.evaluate(() => {
-
-            const articles = Array.from(
-              document.querySelectorAll('.blog-article-card')
-            )
-            
-            return articles.map((article) => ({
-              title: article.querySelector('h1').textContent,
-              url: article.querySelector('a').getAttribute('href'),
-            }))
-          })
-        
-          await browser.close()
+        const favoriteArticles = $('.blog-article-card').map((i, el) => ({
+            title: $(el).find('h1').text(),
+            url: $(el).find('a').attr('href')
+        })).get();
 
           const newfavoriteArticles = favoriteArticles.map((item) =>({
               user_id,
