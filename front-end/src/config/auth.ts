@@ -1,16 +1,24 @@
-function saveTokenToLocalStorage(token: string) {
-  localStorage.setItem('token', JSON.stringify(token))
+type userLoginReponse = {
+  user_id: string
+  token: string
 }
 
-function getTokenFromLocalStorage() {
-  const tokenUser = localStorage.getItem('token')
-  if (tokenUser) {
-    return JSON.parse(tokenUser)
+function saveTokenToLocalStorage(userAuthData: userLoginReponse) {
+  localStorage.setItem('userData', JSON.stringify(userAuthData))
+}
+
+function getTokenFromLocalStorage(): userLoginReponse | undefined {
+  const userAuthData = localStorage.getItem('userData')
+  if (userAuthData) {
+    return JSON.parse(userAuthData)
   }
 }
 
-function removeTokenFromLocalStorage() {
-  localStorage.removeItem('token')
+function removeTokenFromLocalStorage(): void {
+  const userAuthData = getTokenFromLocalStorage()
+  if (userAuthData) {
+    localStorage.removeItem('userData')
+  }
 }
 
 export { saveTokenToLocalStorage, getTokenFromLocalStorage, removeTokenFromLocalStorage }

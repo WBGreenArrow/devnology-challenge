@@ -19,7 +19,7 @@ import { api } from '../../config/api'
 import { getTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
 import { useStyles } from './styles'
 
-export const Login = () => {
+export const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [userName, setUserName] = useState('')

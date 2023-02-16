@@ -2,19 +2,19 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { Login } from './pages/Login'
 import { DashBoard } from './components/DashBoard'
 import { Links } from './pages/Links'
-import { getTokenFromLocalStorage } from './config/auth'
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from './config/auth'
 
 type PrivateRouteProps = {
   children: JSX.Element
 }
 
 export const PrivateRoutes = ({ children }: PrivateRouteProps) => {
-  const token = getTokenFromLocalStorage()
+  const userData = getTokenFromLocalStorage()
 
-  if (token) {
+  if (userData?.token) {
     return children
   }
-
+  removeTokenFromLocalStorage()
   return <Navigate to="/login" />
 }
 

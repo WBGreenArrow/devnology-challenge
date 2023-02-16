@@ -1,115 +1,134 @@
 import { useState, useEffect } from 'react'
-
-import { Grid, TextField, Tooltip, InputLabel } from '@mui/material'
+import toast from 'react-hot-toast'
+import { Grid, TextField, Tooltip } from '@mui/material'
 import CreateIcon from '@mui/icons-material/Create'
 import HighlightOffIcon from '@mui/icons-material/HighlightOff'
 import SaveIcon from '@mui/icons-material/Save'
 import { useStyles } from './styles'
 import { ImportLinksCard } from '../../components/ImportLinksCard'
+import { api } from '../../config/api'
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from '../../config/auth'
+import { useNavigate } from 'react-router-dom'
+import { formatedDate } from '../../utils'
+import { Input } from '../../components/Input'
 
-const itemMock: any = [
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   created_at: 'Ferb, 13, 2023',
-  //   title: 'Teste',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  // {
-  //   id: 'asdad-asdad2323',
-  //   title: 'Teste',
-  //   created_at: 'Ferb, 13, 2023',
-  //   url: 'http://localhost.teste',
-  // },
-  {
-    id: 'asdad-asdad2323',
-    title: 'Teste',
-    created_at: 'Ferb, 13, 2023',
-    url: 'http://localhost.teste',
-  },
-]
+type BookmarkProps = {
+  id?: string
+  label: string
+  url: string
+  created_at?: Date
+}
 
 export const Links = () => {
+  const [data, setData] = useState<[BookmarkProps] | []>([])
   const [isAddingNewItem, setIsAddingNewItem] = useState<boolean>(false)
+  const [editingBookmark, setEditingBookmark] = useState<BookmarkProps | undefined>()
+  const [newBookmark, setNewBookmark] = useState<BookmarkProps | undefined>()
 
+  const navigate = useNavigate()
   const classes = useStyles()
+  const userData = getTokenFromLocalStorage()
+
+  const errorNotify = (message: string) => toast.error(message)
+  const sucesssNotify = (message: string) => toast.success(message)
 
   useEffect(() => {
-    return () => {
-      setIsAddingNewItem(false)
-    }
+    getBookmarkList()
   }, [])
+
+  const getBookmarkList = async () => {
+    try {
+      const reponse = await api.post('/bookmarks', {
+        user_id: userData?.user_id,
+      })
+      setData(() => reponse.data.bookMarksList)
+    } catch (error: any) {
+      if (error.response.status === 401) {
+        handleLogOut()
+        return
+      }
+      errorNotify('Error to get data!')
+    }
+  }
+
+  const saveBookmark = async () => {
+    try {
+      const { data } = await api.post('/bookmark', {
+        user_id: userData?.user_id,
+        ...newBookmark,
+      })
+      sucesssNotify('Saved successfully!')
+      //@ts-ignore
+      setData((prevState) => [...prevState, data.bookmark])
+      setIsAddingNewItem(false)
+      setNewBookmark(() => undefined)
+    } catch (error: any) {
+      errorNotify('Error to save bookmark!')
+    }
+  }
+
+  const updateBookmark = async (id, index) => {
+    try {
+      const response = await api.patch(`/bookmark/${id}`, {
+        ...editingBookmark,
+      })
+      sucesssNotify('Updated successfully!')
+      //@ts-ignore
+      const currentBookmarkList = data
+      currentBookmarkList[index] = response.data.bookmarkUpdated
+
+      setData(() => [...currentBookmarkList])
+      setEditingBookmark(() => undefined)
+    } catch (error: any) {
+      errorNotify('Error to update bookmark!')
+    }
+  }
+
+  const deleteBookmark = async (id) => {
+    try {
+      const response = await api.delete(`/bookmark/${id}`)
+      const newBookMarkList = data.filter((item) => item.id !== response.data.bookmarkDeleted.id)
+      //@ts-ignore
+      setData(() => [...newBookMarkList])
+      sucesssNotify('Deleted successfully!')
+    } catch (error: any) {
+      errorNotify('Error to delete bookmark!')
+    }
+  }
+
+  const handleLogOut = () => {
+    removeTokenFromLocalStorage()
+    navigate('/login')
+  }
+
+  const setFocusInputEdit = (id) => {
+    const inputField = document.getElementById(id) as HTMLInputElement
+    inputField?.focus()
+  }
+
+  // const onChange = useCallback((attr: any, value: string) => {
+  //   setNewBookmark((preveState: any) => {
+  //     let currentItem = { ...preveState }
+  //     currentItem[attr] = value
+  //     return currentItem
+  //   })
+  // }, [])
+
+  const onChange = (attr: any, value: string) => {
+    setNewBookmark((preveState: any) => {
+      let currentItem = { ...preveState }
+      currentItem[attr] = value
+      return currentItem
+    })
+  }
+
+  const onChangeEdit = (attr: any, value: string) => {
+    setEditingBookmark((preveState: any) => {
+      let currentItem = { ...preveState }
+      currentItem[attr] = value
+      return currentItem
+    })
+  }
 
   return (
     <div>
@@ -129,19 +148,27 @@ export const Links = () => {
           ) : (
             <Grid container spacing={2} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
               <Grid item xs={12} md={4}>
-                <span>
-                  <InputLabel>Title</InputLabel>
-                  <TextField className={classes.linkFormInput} fullWidth />
-                </span>
+                <Input
+                  label="Title"
+                  initValue={newBookmark?.['label'] || ''}
+                  onChange={(valeu: string) => {
+                    onChange('label', valeu)
+                  }}
+                />
               </Grid>
               <Grid item xs={12} md={6}>
                 <span>
-                  <InputLabel>Url</InputLabel>
-                  <TextField className={classes.linkFormInput} fullWidth />
+                  <Input
+                    label="Url"
+                    initValue={newBookmark?.['url'] || ''}
+                    onChange={(valeu: string) => {
+                      onChange('url', valeu)
+                    }}
+                  />
                 </span>
               </Grid>
               <Grid item xs={12} md>
-                <span>
+                <span onClick={saveBookmark}>
                   <Tooltip title="Save" enterDelay={500} enterNextDelay={500}>
                     <SaveIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
                   </Tooltip>
@@ -169,8 +196,8 @@ export const Links = () => {
           </div>
         </div>
         <div className={classes.linkContentItems}>
-          {itemMock.length ? (
-            itemMock.map((item: any, index: any) => {
+          {data.length ? (
+            data.map((item, index: number) => {
               return (
                 <div
                   className={
@@ -184,32 +211,80 @@ export const Links = () => {
                       <span className={classes.linkItemsSpan} name-label="Date">
                         <TextField
                           className={classes.linkItemsInput}
-                          fullWidth
                           disabled
-                          defaultValue={item.created_at}
+                          value={
+                            !(editingBookmark?.id === item.id)
+                              ? formatedDate(item.created_at)
+                              : formatedDate(editingBookmark?.created_at)
+                          }
                         />
                       </span>
                     </Grid>
                     <Grid item md={4} sx={{ minWidth: 129 }}>
                       <span className={classes.linkItemsSpan} name-label="Title">
-                        <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.title} />
+                        <Input
+                          id={item.id}
+                          tableInput={true}
+                          disabled={!(editingBookmark?.id === item.id)}
+                          initValue={!(editingBookmark?.id === item.id) ? item.label : editingBookmark?.label}
+                          onChange={(valeu: string) => {
+                            onChangeEdit('label', valeu)
+                          }}
+                        />
+                        {/* <TextField
+                          id={item.id}
+                          className={classes.linkItemsInput}
+                          disabled={!(editingBookmark?.id === item.id)}
+                          onChange={(event) => onChangeEdit('label', event.target.value)}
+                          value={}
+                        /> */}
                       </span>
                     </Grid>
                     <Grid item md={4}>
                       <span className={classes.linkItemsSpan} name-label="Url">
-                        <TextField className={classes.linkItemsInput} fullWidth defaultValue={item.url} />
+                        {/* <TextField
+                          className={classes.linkItemsInput}
+                          disabled={!(editingBookmark?.id === item.id)}
+                          value={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
+                        /> */}
+                        <Input
+                          tableInput={true}
+                          disabled={!(editingBookmark?.id === item.id)}
+                          initValue={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
+                          onChange={(valeu: string) => {
+                            onChangeEdit('url', valeu)
+                          }}
+                        />
                       </span>
                     </Grid>
                     <Grid item>
                       <div className={classes.linkItemsContainerBtns}>
                         <span>
-                          <Tooltip title="Edit" enterDelay={500} enterNextDelay={500}>
-                            <CreateIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
+                          <Tooltip title={editingBookmark?.id ? 'Save' : 'Edit'} enterDelay={500} enterNextDelay={500}>
+                            {editingBookmark?.id === item.id ? (
+                              <SaveIcon
+                                sx={{ color: '#1A194D', cursor: 'pointer' }}
+                                onClick={() => updateBookmark(item.id, index)}
+                              />
+                            ) : (
+                              <CreateIcon
+                                sx={{ color: '#1A194D', cursor: 'pointer' }}
+                                onClick={() => {
+                                  setEditingBookmark(() => item)
+                                  setTimeout(() => {
+                                    setFocusInputEdit(item.id)
+                                  }, 100)
+                                }}
+                              />
+                            )}
                           </Tooltip>
                         </span>
                         <span>
                           <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
-                            <HighlightOffIcon sx={{ color: '#1A194D', cursor: 'pointer' }} />
+                            <HighlightOffIcon
+                              sx={{ color: '#1A194D', cursor: 'pointer' }}
+                              onClick={() => deleteBookmark(item.id)}
+                            />
                           </Tooltip>
                         </span>
                       </div>
