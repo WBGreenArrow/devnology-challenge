@@ -1,4 +1,5 @@
 import { hash } from "bcryptjs"
+import { sign } from "jsonwebtoken";
 
 import { client } from "../../../prisma/client"
  
@@ -31,7 +32,17 @@ class CreateUserUseCase {
             }
         })
 
-        return user
+        const token = sign({}, process.env.JWT_SECRET, {
+            subject: username,
+            expiresIn: "4h"
+        })
+        
+        const response = {
+            user_id: user.id,
+            token
+        }
+
+        return response
     }
 
 }

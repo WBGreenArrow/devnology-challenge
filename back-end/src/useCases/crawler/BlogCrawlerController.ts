@@ -5,17 +5,22 @@ class BlogCrawlerController {
 
     async handle(request: Request, response: Response){
 
-      const { url } = request.body
+      const { user_id } = request.body
+      // const { url } = request.body
+      const url  = "https://devgo.com.br/"
 
-      if(!url){
-        throw new Error("Error Invalid URL")
-      }
+      // if(!url){
+      //   throw new Error("Error Invalid URL")
+      // }
 
       const blogCrawlerUseCase = new BlogCrawlerUseCase()
 
-      const favoriteArticlesList = await blogCrawlerUseCase.execute({ url })
+      const { bookmarkList } = await blogCrawlerUseCase.execute({
+        user_id, 
+        url
+      })
 
-      return response.json(favoriteArticlesList)
+      return response.json(bookmarkList)
        
     }
 

@@ -31,6 +31,6 @@ router.post("/bookmark", ensureAutenticate, createBookmarksController.handle)
 router.patch("/bookmark/:id", ensureAutenticate, updateBookmarkController.handle)
 router.delete("/bookmark/:id", ensureAutenticate, deleteBookmarkController.handle)
 
-router.get("/import", ensureAutenticate, blogCrawlerController.handle)
+router.post("/import", ensureAutenticate, blogCrawlerController.handle)
 
 export { router } 
