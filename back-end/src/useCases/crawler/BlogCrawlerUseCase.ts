@@ -1,4 +1,6 @@
-import puppeteer from "puppeteer";
+import puppeteerDev from "puppeteer";
+import puppeteerCore from "puppeteer-core";
+import chrome from "chrome-aws-lambda";
 import { client } from "../../prisma/client"
 
 interface IRequestCrawler{
@@ -6,11 +8,31 @@ interface IRequestCrawler{
     url: string;
 }
 
+let puppeteer;
+
+if(process.env.NODE_ENV === 'production'){
+  puppeteer = puppeteerCore
+}else{
+  puppeteer = puppeteerDev
+}
+
 
 class BlogCrawlerUseCase {
 
     async execute({  user_id, url}: IRequestCrawler ){
-        const browser = await puppeteer.launch()
+      let options = {}
+
+      if(process.env.NODE_ENV === 'production'){
+        options={
+          args: [...chrome.args, "--hide-scrollbars","--disable-web-security"],
+          defaultViewPort: chrome.defaultViewport,
+          executablePath: await chrome.executablePath,
+          handless: true,
+          ignoreHTTPSErrors: true
+        }
+      }
+
+        const browser = await puppeteer.launch(options)
         const page = await browser.newPage()
 
         await page.goto(url)
