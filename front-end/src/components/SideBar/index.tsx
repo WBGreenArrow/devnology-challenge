@@ -81,6 +81,6 @@ export const SideBar = ({ showMenu, onClose, changeHeaderText }: ISideBar) => {
         </div>
       </Grid>
     ),
-    [router],
+    [showMenu, router],
   )
 }

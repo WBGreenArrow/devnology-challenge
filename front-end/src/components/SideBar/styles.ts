@@ -112,7 +112,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
 
   sideBarContainerFooter: {
-    height: '78%',
+    height: '68%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'end',

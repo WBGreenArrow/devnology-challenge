@@ -40,6 +40,16 @@ export const Register = () => {
   }, [])
 
   const handleAuthenticate = async () => {
+    if (userName === '') {
+      notify('Username Is Required!')
+      return
+    }
+
+    if (password === '') {
+      notify('Passeord Is Required!')
+      return
+    }
+
     setIsLoading(true)
     try {
       const { data: userData } = await api.post('/users', {

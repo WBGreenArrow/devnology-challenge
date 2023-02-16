@@ -21,6 +21,17 @@ export const useStyles = makeStyles((theme?: any) => ({
       justifyContent: 'center',
     },
   },
+  containerMain: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  gridContainer: {
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+    },
+  },
 
   containerText: {
     maxWidth: 547,

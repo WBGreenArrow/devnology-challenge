@@ -16,7 +16,7 @@ import {
 } from '@mui/material'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { api } from '../../config/api'
-import { getTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
 import { useStyles } from './styles'
 import ImgBackground from '../../assets/webSite.png'
 
@@ -40,6 +40,15 @@ export const Login = () => {
   }, [])
 
   const handleAuthenticate = async () => {
+    if (userName === '') {
+      notify('Username Is Required!')
+      return
+    }
+
+    if (password === '') {
+      notify('Passeord Is Required!')
+      return
+    }
     setIsLoading(true)
     try {
       const { data: userData } = await api.post('/authenticate', {
@@ -59,10 +68,14 @@ export const Login = () => {
 
   return (
     !userData && (
-      <Container maxWidth={'xl'}>
-        <Box sx={{ width: '100%', height: '100vh' }}>
-          <Grid container sx={{ height: '100%', flexDirection: { xs: 'column', md: 'row' } }}>
-            <Grid item md>
+      <div style={{ width: '100vw', height: '100vh' }} className={classes.containerMain}>
+        <Container maxWidth={'xl'}>
+          <Grid
+            container
+            className={classes.gridContainer}
+            sx={{ width: '100%', height: '100%', flexDirection: { xs: 'column', md: 'row' } }}
+          >
+            <Grid item sm>
               <div className={classes.container}>
                 <div className={classes.containerText}>
                   <h1>Sign In to Recharge Direct</h1>
@@ -73,7 +86,7 @@ export const Login = () => {
                 </div>
               </div>
             </Grid>
-            <Grid item md>
+            <Grid item sm>
               <div className={classes.loginContainer}>
                 <div className={classes.loginContent}>
                   <TextField
@@ -115,7 +128,14 @@ export const Login = () => {
                     </Button>
                   </span>
                   <span className={classes.loginButtonSignUp}>
-                    <Button fullWidth variant="contained" onClick={() => navigate('/register')}>
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      onClick={() => {
+                        navigate('/register')
+                        removeTokenFromLocalStorage()
+                      }}
+                    >
                       Sign Up
                     </Button>
                   </span>
@@ -123,8 +143,8 @@ export const Login = () => {
               </div>
             </Grid>
           </Grid>
-        </Box>
-      </Container>
+        </Container>
+      </div>
     )
   )
 }
