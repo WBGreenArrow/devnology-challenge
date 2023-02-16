@@ -18,6 +18,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { api } from '../../config/api'
 import { getTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
 import { useStyles } from './styles'
+import ImgBackground from '../../assets/man.png'
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -41,12 +42,10 @@ export const Register = () => {
   const handleAuthenticate = async () => {
     setIsLoading(true)
     try {
-      const { data: userData } = await api.post('/authenticate', {
+      const { data: userData } = await api.post('/users', {
         username: userName,
         password,
       })
-
-      api.defaults.headers.common['Authorization'] = userData.token
 
       saveTokenToLocalStorage(userData)
       navigate('/')
@@ -64,14 +63,11 @@ export const Register = () => {
             <Grid item md>
               <div className={classes.container}>
                 <div className={classes.containerText}>
-                  <h1>Sign In to Recharge Direct</h1>
-                  <p> if you don’t have an account you can Register here!</p>
+                  <h1>Create you account</h1>
+                  <p> and manage your links from anywhere and anytime!</p>
                 </div>
                 <div className={classes.containerImg}>
-                  <img
-                    src="https://s3-alpha-sig.figma.com/img/4ca4/9fd9/c2b30ffb9ef403891144443190e5a478?Expires=1676851200&Signature=bOqtOz6xrrupQk3ohFj9ftfGM1GMDJw8B3lRAEJ6taRkk3qR-pmza6tBE5YpArxXeFtd6BJDm1KxhUWOBr~llkyBcCK5oYx-JbHruPUQHq0HzAPPq-6AcnwJI3dwD4PYagKQ3OpwIrkLS5ShxyXERTt9v501~-5hBZHlYka~U10Lck4ssQCYchvvilhsJIDOpPCCFsW2CaCuwfuWML3fvAj48wMbCXSnPZDRdvkoutjUMjTBRTt56rt7etCBOI9ui9BO3gWahABa8Yblk5J47N3StjkBiNWHSAm9jPm9YIqCtSc4UySm3Iw-pgDJAbxQ1sCkSRnotHdmQltDb1LSOg__&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4"
-                    alt="Man downing"
-                  />
+                  <img src={ImgBackground} alt="Man downing" />
                 </div>
               </div>
             </Grid>
@@ -111,7 +107,7 @@ export const Register = () => {
                         <CircularProgress size={32} />
                       </Box>
                     ) : (
-                      'Sign In'
+                      'Sign Up'
                     )}
                   </Button>
                 </div>

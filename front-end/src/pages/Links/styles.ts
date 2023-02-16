@@ -261,4 +261,16 @@ export const useStyles = makeStyles((theme?: any) => ({
       },
     },
   },
+
+  linkLoadingContainer: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+
+    '& svg': {
+      color: '#1A194D',
+    },
+  },
 }))

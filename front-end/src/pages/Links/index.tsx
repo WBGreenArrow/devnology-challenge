@@ -11,6 +11,7 @@ import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from '../../con
 import { useNavigate } from 'react-router-dom'
 import { formatedDate } from '../../utils'
 import { Input } from '../../components/Input'
+import { Box, CircularProgress } from '@material-ui/core'
 
 type BookmarkProps = {
   id?: string
@@ -22,6 +23,8 @@ type BookmarkProps = {
 export const Links = () => {
   const [data, setData] = useState<[BookmarkProps] | []>([])
   const [isAddingNewItem, setIsAddingNewItem] = useState<boolean>(false)
+  const [isImporting, setIsImporting] = useState<boolean>(false)
+  const [isLoading, setIsLoading] = useState<boolean>(true)
   const [editingBookmark, setEditingBookmark] = useState<BookmarkProps | undefined>()
   const [newBookmark, setNewBookmark] = useState<BookmarkProps | undefined>()
 
@@ -30,13 +33,14 @@ export const Links = () => {
   const userData = getTokenFromLocalStorage()
 
   const errorNotify = (message: string) => toast.error(message)
-  const sucesssNotify = (message: string) => toast.success(message)
+  const sucessNotify = (message: string) => toast.success(message)
 
   useEffect(() => {
     getBookmarkList()
   }, [])
 
   const getBookmarkList = async () => {
+    setIsLoading(true)
     try {
       const reponse = await api.post('/bookmarks', {
         user_id: userData?.user_id,
@@ -49,6 +53,7 @@ export const Links = () => {
       }
       errorNotify('Error to get data!')
     }
+    setIsLoading(false)
   }
 
   const saveBookmark = async () => {
@@ -57,7 +62,7 @@ export const Links = () => {
         user_id: userData?.user_id,
         ...newBookmark,
       })
-      sucesssNotify('Saved successfully!')
+      sucessNotify('Saved successfully!')
       //@ts-ignore
       setData((prevState) => [...prevState, data.bookmark])
       setIsAddingNewItem(false)
@@ -72,7 +77,7 @@ export const Links = () => {
       const response = await api.patch(`/bookmark/${id}`, {
         ...editingBookmark,
       })
-      sucesssNotify('Updated successfully!')
+      sucessNotify('Updated successfully!')
       //@ts-ignore
       const currentBookmarkList = data
       currentBookmarkList[index] = response.data.bookmarkUpdated
@@ -90,10 +95,24 @@ export const Links = () => {
       const newBookMarkList = data.filter((item) => item.id !== response.data.bookmarkDeleted.id)
       //@ts-ignore
       setData(() => [...newBookMarkList])
-      sucesssNotify('Deleted successfully!')
+      sucessNotify('Deleted successfully!')
     } catch (error: any) {
       errorNotify('Error to delete bookmark!')
     }
+  }
+
+  const importLinks = async () => {
+    setIsImporting(true)
+    try {
+      const reponse = await api.post('/import', {
+        user_id: userData?.user_id,
+      })
+      setData(() => reponse.data)
+      sucessNotify('Import successfully!')
+    } catch (error: any) {
+      errorNotify('Error to import data!')
+    }
+    setIsImporting(false)
   }
 
   const handleLogOut = () => {
@@ -105,14 +124,6 @@ export const Links = () => {
     const inputField = document.getElementById(id) as HTMLInputElement
     inputField?.focus()
   }
-
-  // const onChange = useCallback((attr: any, value: string) => {
-  //   setNewBookmark((preveState: any) => {
-  //     let currentItem = { ...preveState }
-  //     currentItem[attr] = value
-  //     return currentItem
-  //   })
-  // }, [])
 
   const onChange = (attr: any, value: string) => {
     setNewBookmark((preveState: any) => {
@@ -136,7 +147,7 @@ export const Links = () => {
         <span>Create link</span>
         <span>Manage your links as best you can</span>
       </div>
-      <ImportLinksCard />
+      <ImportLinksCard onClick={importLinks} isImporting={isImporting} />
       <div className={classes.linkContainerItems}>
         <div className={classes.linkFormContainer}>
           {!isAddingNewItem ? (
@@ -196,103 +207,95 @@ export const Links = () => {
           </div>
         </div>
         <div className={classes.linkContentItems}>
-          {data.length ? (
-            data.map((item, index: number) => {
-              return (
-                <div
-                  className={
-                    index % 2 === 0
-                      ? `${classes.linkContentItemsBackground} ${classes.linkContentItemsBackgroundColor}`
-                      : classes.linkContentItemsBackground
-                  }
-                >
-                  <Grid container wrap="nowrap" key={item.id} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
-                    <Grid item md={2} sx={{ minWidth: 129 }}>
-                      <span className={classes.linkItemsSpan} name-label="Date">
-                        <TextField
-                          className={classes.linkItemsInput}
-                          disabled
-                          value={
-                            !(editingBookmark?.id === item.id)
-                              ? formatedDate(item.created_at)
-                              : formatedDate(editingBookmark?.created_at)
-                          }
-                        />
-                      </span>
-                    </Grid>
-                    <Grid item md={4} sx={{ minWidth: 129 }}>
-                      <span className={classes.linkItemsSpan} name-label="Title">
-                        <Input
-                          id={item.id}
-                          tableInput={true}
-                          disabled={!(editingBookmark?.id === item.id)}
-                          initValue={!(editingBookmark?.id === item.id) ? item.label : editingBookmark?.label}
-                          onChange={(valeu: string) => {
-                            onChangeEdit('label', valeu)
-                          }}
-                        />
-                        {/* <TextField
-                          id={item.id}
-                          className={classes.linkItemsInput}
-                          disabled={!(editingBookmark?.id === item.id)}
-                          onChange={(event) => onChangeEdit('label', event.target.value)}
-                          value={}
-                        /> */}
-                      </span>
-                    </Grid>
-                    <Grid item md={4}>
-                      <span className={classes.linkItemsSpan} name-label="Url">
-                        {/* <TextField
-                          className={classes.linkItemsInput}
-                          disabled={!(editingBookmark?.id === item.id)}
-                          value={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
-                        /> */}
-                        <Input
-                          tableInput={true}
-                          disabled={!(editingBookmark?.id === item.id)}
-                          initValue={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
-                          onChange={(valeu: string) => {
-                            onChangeEdit('url', valeu)
-                          }}
-                        />
-                      </span>
-                    </Grid>
-                    <Grid item>
-                      <div className={classes.linkItemsContainerBtns}>
-                        <span>
-                          <Tooltip title={editingBookmark?.id ? 'Save' : 'Edit'} enterDelay={500} enterNextDelay={500}>
-                            {editingBookmark?.id === item.id ? (
-                              <SaveIcon
-                                sx={{ color: '#1A194D', cursor: 'pointer' }}
-                                onClick={() => updateBookmark(item.id, index)}
-                              />
-                            ) : (
-                              <CreateIcon
-                                sx={{ color: '#1A194D', cursor: 'pointer' }}
-                                onClick={() => {
-                                  setEditingBookmark(() => item)
-                                  setTimeout(() => {
-                                    setFocusInputEdit(item.id)
-                                  }, 100)
-                                }}
-                              />
-                            )}
-                          </Tooltip>
-                        </span>
-                        <span>
-                          <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
-                            <HighlightOffIcon
-                              sx={{ color: '#1A194D', cursor: 'pointer' }}
-                              onClick={() => deleteBookmark(item.id)}
-                            />
-                          </Tooltip>
-                        </span>
-                      </div>
-                    </Grid>
+          {isLoading ? (
+            <div className={classes.linkLoadingContainer}>
+              <Box>
+                <CircularProgress size={100} />
+              </Box>
+            </div>
+          ) : data.length ? (
+            data.map((item, index: number) => (
+              <div
+                className={
+                  index % 2 === 0
+                    ? `${classes.linkContentItemsBackground} ${classes.linkContentItemsBackgroundColor}`
+                    : classes.linkContentItemsBackground
+                }
+              >
+                <Grid container wrap="nowrap" key={item.id} sx={{ flexDirection: { xs: 'column', md: 'row' } }}>
+                  <Grid item md={2} sx={{ minWidth: 129 }}>
+                    <span className={classes.linkItemsSpan} name-label="Date">
+                      <TextField
+                        className={classes.linkItemsInput}
+                        disabled
+                        value={
+                          !(editingBookmark?.id === item.id)
+                            ? formatedDate(item.created_at)
+                            : formatedDate(editingBookmark?.created_at)
+                        }
+                      />
+                    </span>
                   </Grid>
-                </div>
-              )
-            })
+                  <Grid item md={4} sx={{ minWidth: 129 }}>
+                    <span className={classes.linkItemsSpan} name-label="Title">
+                      <Input
+                        id={item.id}
+                        tableInput={true}
+                        disabled={!(editingBookmark?.id === item.id)}
+                        initValue={!(editingBookmark?.id === item.id) ? item.label : editingBookmark?.label}
+                        onChange={(valeu: string) => {
+                          onChangeEdit('label', valeu)
+                        }}
+                      />
+                    </span>
+                  </Grid>
+                  <Grid item md={4}>
+                    <span className={classes.linkItemsSpan} name-label="Url">
+                      <Input
+                        tableInput={true}
+                        disabled={!(editingBookmark?.id === item.id)}
+                        initValue={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
+                        onChange={(valeu: string) => {
+                          onChangeEdit('url', valeu)
+                        }}
+                      />
+                    </span>
+                  </Grid>
+                  <Grid item>
+                    <div className={classes.linkItemsContainerBtns}>
+                      <span>
+                        <Tooltip title={editingBookmark?.id ? 'Save' : 'Edit'} enterDelay={500} enterNextDelay={500}>
+                          {editingBookmark?.id === item.id ? (
+                            <SaveIcon
+                              sx={{ color: '#1A194D', cursor: 'pointer' }}
+                              onClick={() => updateBookmark(item.id, index)}
+                            />
+                          ) : (
+                            <CreateIcon
+                              sx={{ color: '#1A194D', cursor: 'pointer' }}
+                              onClick={() => {
+                                setEditingBookmark(() => item)
+                                setTimeout(() => {
+                                  setFocusInputEdit(item.id)
+                                }, 100)
+                              }}
+                            />
+                          )}
+                        </Tooltip>
+                      </span>
+                      <span>
+                        <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
+                          <HighlightOffIcon
+                            sx={{ color: '#1A194D', cursor: 'pointer' }}
+                            onClick={() => deleteBookmark(item.id)}
+                          />
+                        </Tooltip>
+                      </span>
+                    </div>
+                  </Grid>
+                </Grid>
+              </div>
+            ))
           ) : (
             <Grid item sx={{ maxWidth: 652, minHeight: 300 }}>
               <div className={`${classes.linkContentItemsNoData} ${classes.linkContentItemsBackgroundColor}`}>

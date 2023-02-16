@@ -55,13 +55,13 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
 
   containerImg: {
-    maxWidth: 562,
-    maxHeight: 482,
-    width: '80%',
+    maxWidth: 600,
+    maxHeight: 500,
+    width: '100%',
     height: 'auto',
 
     position: 'relative',
-    top: '24%',
+    top: '10%',
     left: '50%',
 
     '& img': {

@@ -3,6 +3,7 @@ import { Login } from './pages/Login'
 import { DashBoard } from './components/DashBoard'
 import { Links } from './pages/Links'
 import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from './config/auth'
+import { Register } from './pages/Register'
 
 type PrivateRouteProps = {
   children: JSX.Element
@@ -22,6 +23,7 @@ const RoutesProvider = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
       <Route
         path="/"
         element={
@@ -30,7 +32,7 @@ const RoutesProvider = () => {
           </PrivateRoutes>
         }
       >
-        <Route path="/user" element={<h1>User</h1>} />
+        <Route path="/user" element={<div></div>} />
         <Route path="/links" element={<Links />} />
       </Route>
     </Routes>

@@ -38,25 +38,35 @@ export const useStyles = makeStyles((theme?: any) => ({
       fontWeight: 400,
       color: '#FFF',
     },
+  },
+  importLinksBtn: {
+    width: '100%',
+    height: 40,
 
-    '& :last-child': {
-      width: '100%',
-      height: 40,
+    cursor: 'pointer',
 
-      cursor: 'pointer',
+    marginTop: 16,
+    fontSize: 16,
+    fontFamily: 'Poppins, sans-serif',
+    fontWeight: 400,
+    color: '#FFF',
 
-      marginTop: 16,
-      fontSize: 16,
-      fontFamily: 'Poppins, sans-serif',
-      fontWeight: 400,
-      color: '#FFF',
+    backgroundColor: 'transparent',
+    border: '1px solid #FFF',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 8,
+  },
 
-      backgroundColor: 'transparent',
-      border: '1px solid #FFF',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderRadius: 8,
-    },
+  importLinksLoading: {
+    width: '100%',
+    height: 40,
+
+    marginTop: 16,
+
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
 }))
