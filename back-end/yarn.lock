@@ -112,6 +112,13 @@
   dependencies:
     "@types/node" "*"
 
+"@types/debug@^4.1.0":
+  "integrity" "sha512-9AonUzyTjXXhEOa0DnqpzZi6VHlqKMswga9EXjpXnnqxwLtdvPPtlO8evrI5D9S6asFRCQ6v+wpiUKbw+vKqyg=="
+  "resolved" "https://registry.npmjs.org/@types/debug/-/debug-4.1.7.tgz"
+  "version" "4.1.7"
+  dependencies:
+    "@types/ms" "*"
+
 "@types/express-serve-static-core@^4.17.33":
   "integrity" "sha512-TPBqmR/HRYI3eC2E5hmiivIzv+bidAfXofM+sbonAGvyDhySGw9/PQZFt2BLOrjUUR++4eJVpx6KnLQK1Fk9tA=="
   "resolved" "https://registry.npmjs.org/@types/express-serve-static-core/-/express-serve-static-core-4.17.33.tgz"
@@ -142,6 +149,11 @@
   "integrity" "sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA=="
   "resolved" "https://registry.npmjs.org/@types/mime/-/mime-3.0.1.tgz"
   "version" "3.0.1"
+
+"@types/ms@*":
+  "integrity" "sha512-iiUgKzV9AuaEkZqkOLDIvlQiL6ltuZd9tGcW3gwpnX8JbuiuhFlEGmmFXEXkN50Cvq7Os88IY2v0dkDqXYWVgA=="
+  "resolved" "https://registry.npmjs.org/@types/ms/-/ms-0.7.31.tgz"
+  "version" "0.7.31"
 
 "@types/node@*", "@types/node@^18.13.0":
   "integrity" "sha512-gC3TazRzGoOnoKAhUx+Q0t8S9Tzs74z7m0ipwGpSqQrleP14hKxP4/JUeEQcD3W1/aIpnWl8pHowI7WokuZpXg=="
@@ -473,6 +485,11 @@
   "version" "4.3.4"
   dependencies:
     "ms" "2.1.2"
+
+"deepmerge@^4.2.2":
+  "integrity" "sha512-z2wJZXrmeHdvYJp/Ux55wIjqo81G5Bp4c+oELTW+7ar6SogWHajt5a9gO3s3IDaGSAXjDk0vlQKN3rms8ab3og=="
+  "resolved" "https://registry.npmjs.org/deepmerge/-/deepmerge-4.3.0.tgz"
+  "version" "4.3.0"
 
 "depd@2.0.0":
   "integrity" "sha512-g7nH6P6dyDioJogAAGprGpCtVImJhpPk/roCzdb3fIh61/s/nPsfR6onyMwkCAR/OlC3yBC0lESvUoQEAssIrw=="
@@ -1080,7 +1097,7 @@
     "end-of-stream" "^1.1.0"
     "once" "^1.3.1"
 
-"puppeteer-core@^10.1.0", "puppeteer-core@^19.7.1":
+"puppeteer-core@*", "puppeteer-core@^10.1.0", "puppeteer-core@^19.7.1":
   "integrity" "sha512-4b5Go25IA+0xrUIw0Qtqi4nxc0qwdu/C7VT1+tFPl1W27207YT+7bxfANC3PjXMlS6bcbzinCf5YfGqMl8tfyQ=="
   "resolved" "https://registry.npmjs.org/puppeteer-core/-/puppeteer-core-19.7.1.tgz"
   "version" "19.7.1"
@@ -1112,7 +1129,16 @@
     "unbzip2-stream" "1.4.3"
     "ws" "8.11.0"
 
-"puppeteer@^19.6.3":
+"puppeteer-extra@^3.3.4":
+  "integrity" "sha512-fN5pHvSMJ8d1o7Z8wLLTQOUBpORD2BcFn+KDs7QnkGZs9SV69hcUcce67vX4L4bNSEG3A0P6Osrv+vWNhhdm8w=="
+  "resolved" "https://registry.npmjs.org/puppeteer-extra/-/puppeteer-extra-3.3.4.tgz"
+  "version" "3.3.4"
+  dependencies:
+    "@types/debug" "^4.1.0"
+    "debug" "^4.1.1"
+    "deepmerge" "^4.2.2"
+
+"puppeteer@*", "puppeteer@^19.6.3":
   "integrity" "sha512-K03xTtGDwS6cBXX/EoqoZxglCUKcX2SLIl92fMnGMRjYpPGXoAV2yKEh3QXmXzKqfZXd8TxjjFww+tEttWv8kw=="
   "resolved" "https://registry.npmjs.org/puppeteer/-/puppeteer-19.6.3.tgz"
   "version" "19.6.3"

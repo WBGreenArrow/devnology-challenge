@@ -7,11 +7,11 @@ interface IRequestCrawler{
 }
 
 let puppeteer;
-let chrome;
+let chromium;
 
-if(process.env.NODE_ENV === 'production'){
+if(process.env.AWS_LAMBDA_FUNCTION_VERSION) {
   puppeteer = require("puppeteer-core")
-  chrome = require("chrome-aws-lambda")
+  chromium = require("chrome-aws-lambda")
 }else{
   puppeteer = require("puppeteer")
 }
@@ -22,13 +22,11 @@ class BlogCrawlerUseCase {
     async execute({  user_id, url}: IRequestCrawler ){
       let options = {}
 
-      if(process.env.NODE_ENV === 'production'){
+      if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
         options={
-          args: [...chrome.args, "--hide-scrollbars","--disable-web-security"],
-          defaultViewPort: chrome.defaultViewport,
-          executablePath: await chrome.executablePath,
-          handless: true,
-          ignoreHTTPSErrors: true
+          args: chromium.args,
+          executablePath: await chromium.executablePath,
+          headless: chromium.headless,
         }
       }
 
