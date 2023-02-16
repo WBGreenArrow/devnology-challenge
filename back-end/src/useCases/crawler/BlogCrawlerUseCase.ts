@@ -21,15 +21,20 @@ class BlogCrawlerUseCase {
 
     async execute({  user_id, url}: IRequestCrawler ){
       let options = {}
+      let browser ;
 
       if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
         options={
           executablePath: await chromium.executablePath,
           headless: chromium.headless,
         }
+         browser = await puppeteer.connect({
+          browserWSEndpoint: await chromium.default().executablePath,
+        });
+      }else{
+        browser = await puppeteer.launch(options)
       }
 
-        const browser = await puppeteer.launch(options)
         const page = await browser.newPage()
 
         await page.goto(url)
