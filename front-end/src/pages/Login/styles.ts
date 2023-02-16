@@ -139,6 +139,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
 
   loginButtonSignIn: {
+    width: '100%',
     '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root': {
       height: 61,
       fontSize: 16,
@@ -147,6 +148,7 @@ export const useStyles = makeStyles((theme?: any) => ({
   },
 
   loginButtonSignUp: {
+    width: '100%',
     '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root': {
       marginTop: 16,
       height: 61,
