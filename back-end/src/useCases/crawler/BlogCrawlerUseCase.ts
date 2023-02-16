@@ -1,39 +1,19 @@
 
 import { client } from "../../prisma/client"
-
+import puppeteer  from "puppeteer-core"
+// import puppeteer  from "puppeteer"
+import chromium from "chrome-aws-lambda"
 interface IRequestCrawler{
     user_id: string;
     url: string;
 }
-
-let puppeteer;
-let chromium;
-
-if(process.env.AWS_LAMBDA_FUNCTION_VERSION) {
-  puppeteer = require("puppeteer-core")
-  chromium = require("chrome-aws-lambda")
-}else{
-  puppeteer = require("puppeteer")
-}
-
-
 class BlogCrawlerUseCase {
 
     async execute({  user_id, url}: IRequestCrawler ){
-      let options = {}
-      let browser ;
-
-      if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
-        options={
-          executablePath: await chromium.executablePath,
-          headless: chromium.headless,
-        }
-         browser = await puppeteer.connect({
-          browserWSEndpoint: await chromium.default().executablePath,
-        });
-      }else{
-        browser = await puppeteer.launch(options)
-      }
+      const browser = await puppeteer.connect({
+        //@ts-ignore
+        browserWSEndpoint: await chromium.default().executablePath,
+      });
 
         const page = await browser.newPage()
 
