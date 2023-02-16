@@ -1,6 +1,4 @@
-import puppeteerDev from "puppeteer";
-import puppeteerCore from "puppeteer-core";
-import chrome from "chrome-aws-lambda";
+
 import { client } from "../../prisma/client"
 
 interface IRequestCrawler{
@@ -9,11 +7,13 @@ interface IRequestCrawler{
 }
 
 let puppeteer;
+let chrome;
 
 if(process.env.NODE_ENV === 'production'){
-  puppeteer = puppeteerCore
+  puppeteer = require("puppeteer-core")
+  chrome = require("puppeteer-core")
 }else{
-  puppeteer = puppeteerDev
+  puppeteer = require("puppeteer")
 }
 
 
@@ -44,33 +44,28 @@ class BlogCrawlerUseCase {
             )
             
             return articles.map((article) => ({
-
               title: article.querySelector('h1').textContent,
-
               url: article.querySelector('a').getAttribute('href'),
-
             }))
           })
         
           await browser.close()
 
-       favoriteArticles.forEach(async(bookmark)  => {
-             await client.bookmarks.create({
-              data:{
-                user_id,
-                label: bookmark.title,
-                url: bookmark.url
-              }
-            })
-          })
+          const newfavoriteArticles = favoriteArticles.map((item) =>({
+              user_id,
+              label: item.title,
+              url: item.url
+          }))
 
-      const bookmarkList = await client.bookmarks.findMany({
-        where:{
-          user_id
-        }
-      })
-  
-        
+          await client.bookmarks.createMany({
+            data: newfavoriteArticles
+          })
+          
+        const bookmarkList = await client.bookmarks.findMany({
+          where:{
+            user_id
+          }
+        })
           return { bookmarkList }
     }
 
