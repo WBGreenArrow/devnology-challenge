@@ -24,7 +24,6 @@ class BlogCrawlerUseCase {
 
       if(process.env.AWS_LAMBDA_FUNCTION_VERSION){
         options={
-          args: chromium.args,
           executablePath: await chromium.executablePath,
           headless: chromium.headless,
         }
