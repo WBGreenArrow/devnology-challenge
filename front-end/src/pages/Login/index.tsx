@@ -96,22 +96,29 @@ export const Login = () => {
                       }
                     />
                   </FormControl>
-                  <Button className={classes.loginButton} fullWidth variant="contained" onClick={handleAuthenticate}>
-                    {isLoading ? (
-                      <Box
-                        sx={{
-                          display: 'flex',
-                          '& .MuiCircularProgress-circle': {
-                            color: '#1A194D',
-                          },
-                        }}
-                      >
-                        <CircularProgress size={32} />
-                      </Box>
-                    ) : (
-                      'Sign In'
-                    )}
-                  </Button>
+                  <span className={classes.loginButtonSignIn}>
+                    <Button fullWidth variant="contained" onClick={handleAuthenticate}>
+                      {isLoading ? (
+                        <Box
+                          sx={{
+                            display: 'flex',
+                            '& .MuiCircularProgress-circle': {
+                              color: '#1A194D',
+                            },
+                          }}
+                        >
+                          <CircularProgress size={32} />
+                        </Box>
+                      ) : (
+                        'Sign In'
+                      )}
+                    </Button>
+                  </span>
+                  <span className={classes.loginButtonSignUp}>
+                    <Button fullWidth variant="contained" onClick={() => navigate('/register')}>
+                      Sign Up
+                    </Button>
+                  </span>
                 </div>
               </div>
             </Grid>

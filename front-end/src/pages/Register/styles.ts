@@ -127,7 +127,11 @@ export const useStyles = makeStyles((theme?: any) => ({
     },
   },
 
-  loginButton: {
-    height: 61,
+  loginButtonSignIn: {
+    '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root': {
+      height: 61,
+      fontSize: 16,
+      fontFamily: 'Poppins, sans-serif',
+    },
   },
 }))

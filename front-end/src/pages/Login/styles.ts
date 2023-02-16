@@ -127,7 +127,25 @@ export const useStyles = makeStyles((theme?: any) => ({
     },
   },
 
-  loginButton: {
-    height: 61,
+  loginButtonSignIn: {
+    '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root': {
+      height: 61,
+      fontSize: 16,
+      fontFamily: 'Poppins, sans-serif',
+    },
+  },
+
+  loginButtonSignUp: {
+    '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root': {
+      marginTop: 16,
+      height: 61,
+      fontSize: 16,
+      fontFamily: 'Poppins, sans-serif',
+      backgroundColor: '#1A194D',
+    },
+
+    '& .css-1fu7jd5-MuiButtonBase-root-MuiButton-root:hover': {
+      backgroundColor: '#1A194D',
+    },
   },
 }))
