@@ -25,7 +25,7 @@ const blogCrawlerController = new BlogCrawlerController();
 router.post("/users", createUserUseController.handle)
 router.post("/authenticate", authenticateUserController.handle)
 
-router.get("/bookmark", ensureAutenticate, listBookmarksController.handle)
+router.post("/bookmarks", ensureAutenticate, listBookmarksController.handle)
 router.get("/bookmark/:id", ensureAutenticate, getBookmarkController.handle)
 router.post("/bookmark", ensureAutenticate, createBookmarksController.handle)
 router.patch("/bookmark/:id", ensureAutenticate, updateBookmarkController.handle)
