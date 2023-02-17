@@ -110,8 +110,8 @@ yarn install
 Após concluir a instalação das dependências, configure as variáveis de ambiente. Na raiz do projeto crie um arquivo chamado `.env` e coloque as seguinte variáveis com suas informções.
 
 ```shell
-DATABASE_URL= url de configuração do banco de dados postgress
-JWT_SECRET= chave para criar os tokens de autenticação
+DATABASE_URL={url de conexão do banco de dados postgress}?schema=public
+JWT_SECRET=chave para criar os tokens de autenticação
 ```
 Com as variáveis de ambiente configuradas, é hora de configurar o banco de dados e gerar as tabelas.
 
