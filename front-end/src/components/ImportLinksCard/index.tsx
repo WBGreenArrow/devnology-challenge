@@ -1,6 +1,6 @@
+import { useMemo } from 'react'
 import { Box, CircularProgress } from '@material-ui/core'
 import { Tooltip } from '@mui/material'
-import { useMemo } from 'react'
 
 import { useStyles } from './styles'
 

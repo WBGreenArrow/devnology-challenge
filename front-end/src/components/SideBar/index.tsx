@@ -8,8 +8,8 @@ import ManageAccountsIcon from '@mui/icons-material/ManageAccounts'
 import LogoutIcon from '@mui/icons-material/Logout'
 import CloseIcon from '@mui/icons-material/Close'
 
-import { useStyles } from './styles'
 import { removeTokenFromLocalStorage } from '../../config/auth'
+import { useStyles } from './styles'
 
 interface ISideBar {
   showMenu: boolean

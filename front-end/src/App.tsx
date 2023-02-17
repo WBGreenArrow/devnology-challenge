@@ -1,7 +1,7 @@
 import { ThemeProvider } from '@material-ui/core'
-import { appTheme } from './themes/theme'
 import Routes from './routes'
 import { Toaster } from 'react-hot-toast'
+import { appTheme } from './themes/theme'
 
 function App() {
   return (

@@ -1,17 +1,17 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import toast from 'react-hot-toast'
-import { Grid, TextField, Tooltip } from '@mui/material'
-import CreateIcon from '@mui/icons-material/Create'
-import HighlightOffIcon from '@mui/icons-material/HighlightOff'
-import SaveIcon from '@mui/icons-material/Save'
-import { useStyles } from './styles'
-import { ImportLinksCard } from '../../components/ImportLinksCard'
+import { useNavigate } from 'react-router-dom'
 import { api } from '../../config/api'
 import { getTokenFromLocalStorage, removeTokenFromLocalStorage } from '../../config/auth'
-import { useNavigate } from 'react-router-dom'
 import { formatedDate } from '../../utils'
-import { Input } from '../../components/Input'
 import { Box, CircularProgress } from '@material-ui/core'
+import { Grid, TextField, Tooltip } from '@mui/material'
+import { Create as CreateIcon, HighlightOff as HighlightOffIcon, Save as SaveIcon } from '@mui/icons-material'
+
+import { ImportLinksCard } from '../../components/ImportLinksCard'
+import { Input } from '../../components/Input'
+
+import { useStyles } from './styles'
 
 type BookmarkProps = {
   id?: string
@@ -27,6 +27,8 @@ export const Links = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true)
   const [editingBookmark, setEditingBookmark] = useState<BookmarkProps | undefined>()
   const [newBookmark, setNewBookmark] = useState<BookmarkProps | undefined>()
+
+  const handleBookmark = useRef(false)
 
   const navigate = useNavigate()
   const classes = useStyles()
@@ -57,6 +59,7 @@ export const Links = () => {
   }
 
   const saveBookmark = async () => {
+    changehandleBookmarkState()
     try {
       const { data } = await api.post('/bookmark', {
         user_id: userData?.user_id,
@@ -70,9 +73,11 @@ export const Links = () => {
     } catch (error: any) {
       errorNotify('Error to save bookmark!')
     }
+    changehandleBookmarkState()
   }
 
   const updateBookmark = async (id, index) => {
+    changehandleBookmarkState()
     try {
       const response = await api.patch(`/bookmark/${id}`, {
         ...editingBookmark,
@@ -87,9 +92,11 @@ export const Links = () => {
     } catch (error: any) {
       errorNotify('Error to update bookmark!')
     }
+    changehandleBookmarkState()
   }
 
   const deleteBookmark = async (id) => {
+    changehandleBookmarkState()
     try {
       const response = await api.delete(`/bookmark/${id}`)
       const newBookMarkList = data.filter((item) => item.id !== response.data.bookmarkDeleted.id)
@@ -99,6 +106,7 @@ export const Links = () => {
     } catch (error: any) {
       errorNotify('Error to delete bookmark!')
     }
+    changehandleBookmarkState()
   }
 
   const importLinks = async () => {
@@ -113,6 +121,10 @@ export const Links = () => {
       errorNotify('Error to import data!')
     }
     setIsImporting(false)
+  }
+
+  const changehandleBookmarkState = () => {
+    handleBookmark.current = !handleBookmark.current
   }
 
   const handleLogOut = () => {
@@ -153,7 +165,13 @@ export const Links = () => {
           {!isAddingNewItem ? (
             <div className={classes.linkFormAdd}>
               <Tooltip title="Add new link" enterDelay={500} enterNextDelay={500}>
-                <span onClick={() => setIsAddingNewItem((prevState) => !prevState)}>Add new link</span>
+                <span
+                  onClick={() => {
+                    if (!handleBookmark.current) setIsAddingNewItem((prevState) => !prevState)
+                  }}
+                >
+                  Add new link
+                </span>
               </Tooltip>
             </div>
           ) : (
@@ -259,7 +277,7 @@ export const Links = () => {
                         disabled={!(editingBookmark?.id === item.id)}
                         initValue={!(editingBookmark?.id === item.id) ? item.url : editingBookmark?.url}
                         onChange={(valeu: string) => {
-                          onChangeEdit('url', valeu)
+                          if (!handleBookmark.current) onChangeEdit('url', valeu)
                         }}
                       />
                     </span>
@@ -271,7 +289,9 @@ export const Links = () => {
                           {editingBookmark?.id === item.id ? (
                             <SaveIcon
                               sx={{ color: '#1A194D', cursor: 'pointer' }}
-                              onClick={() => updateBookmark(item.id, index)}
+                              onClick={() => {
+                                if (!handleBookmark.current) updateBookmark(item.id, index)
+                              }}
                             />
                           ) : (
                             <CreateIcon
@@ -290,7 +310,9 @@ export const Links = () => {
                         <Tooltip title="Delete" enterDelay={500} enterNextDelay={500}>
                           <HighlightOffIcon
                             sx={{ color: '#1A194D', cursor: 'pointer' }}
-                            onClick={() => deleteBookmark(item.id)}
+                            onClick={() => {
+                              if (!handleBookmark.current) deleteBookmark(item.id)
+                            }}
                           />
                         </Tooltip>
                       </span>

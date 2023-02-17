@@ -2,6 +2,9 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import toast from 'react-hot-toast'
 
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import { api } from '../../config/api'
+import { getTokenFromLocalStorage, removeTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
 import {
   Container,
   Box,
@@ -14,11 +17,9 @@ import {
   IconButton,
   CircularProgress,
 } from '@mui/material'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { api } from '../../config/api'
-import { getTokenFromLocalStorage, removeTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
-import { useStyles } from './styles'
+
 import ImgBackground from '../../assets/webSite.png'
+import { useStyles } from './styles'
 
 export const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -109,35 +110,31 @@ export const Login = () => {
                       }
                     />
                   </FormControl>
-                  <span className={classes.loginButtonSignIn}>
-                    <Button fullWidth variant="contained" onClick={handleAuthenticate}>
-                      {isLoading ? (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            '& .MuiCircularProgress-circle': {
-                              color: '#1A194D',
-                            },
-                          }}
-                        >
-                          <CircularProgress size={32} />
-                        </Box>
-                      ) : (
-                        'Sign In'
-                      )}
-                    </Button>
+
+                  <span className={classes.loginButton} onClick={handleAuthenticate}>
+                    {isLoading ? (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          '& .MuiCircularProgress-circle': {
+                            color: '#1A194D',
+                          },
+                        }}
+                      >
+                        <CircularProgress size={32} />
+                      </Box>
+                    ) : (
+                      'Sign In'
+                    )}
                   </span>
-                  <span className={classes.loginButtonSignUp}>
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      onClick={() => {
-                        navigate('/register')
-                        removeTokenFromLocalStorage()
-                      }}
-                    >
-                      Sign Up
-                    </Button>
+                  <span
+                    className={classes.loginButtonSingUp}
+                    onClick={() => {
+                      navigate('/register')
+                      removeTokenFromLocalStorage()
+                    }}
+                  >
+                    Sign Up
                   </span>
                 </div>
               </div>

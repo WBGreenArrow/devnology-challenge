@@ -17,8 +17,8 @@ import {
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { api } from '../../config/api'
 import { getTokenFromLocalStorage, saveTokenToLocalStorage } from '../../config/auth'
-import { useStyles } from './styles'
 import ImgBackground from '../../assets/man.png'
+import { useStyles } from './styles'
 
 export const Register = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -104,23 +104,21 @@ export const Register = () => {
                       }
                     />
                   </FormControl>
-                  <span className={classes.loginButtonSignIn}>
-                    <Button fullWidth variant="contained" onClick={handleAuthenticate}>
-                      {isLoading ? (
-                        <Box
-                          sx={{
-                            display: 'flex',
-                            '& .MuiCircularProgress-circle': {
-                              color: '#1A194D',
-                            },
-                          }}
-                        >
-                          <CircularProgress size={32} />
-                        </Box>
-                      ) : (
-                        'Sign Up'
-                      )}
-                    </Button>
+                  <span className={classes.loginButton} onClick={handleAuthenticate}>
+                    {isLoading ? (
+                      <Box
+                        sx={{
+                          display: 'flex',
+                          '& .MuiCircularProgress-circle': {
+                            color: '#1A194D',
+                          },
+                        }}
+                      >
+                        <CircularProgress size={32} />
+                      </Box>
+                    ) : (
+                      'Sign Up'
+                    )}
                   </span>
                 </div>
               </div>
